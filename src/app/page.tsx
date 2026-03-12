@@ -30,35 +30,35 @@ export default function LandingPage() {
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-32 pb-16 px-4 md:px-6">
+      <section className="pt-32 pb-16 px-4 md:px-6 bg-gradient-to-b from-teal-50/50 to-slate-50">
         <div className="max-w-5xl mx-auto">
           <div className="max-w-2xl mx-auto text-center">
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 bg-teal-50 text-teal-700 rounded-full px-4 py-2 text-sm font-medium mb-6">
-              <span className="w-2 h-2 bg-teal-500 rounded-full"></span>
+            <div className="inline-flex items-center gap-2 bg-teal-100 text-teal-700 rounded-full px-4 py-2 text-sm font-semibold mb-6 shadow-sm">
+              <span className="w-2 h-2 bg-teal-500 rounded-full animate-pulse"></span>
               Napredak, ne savršenstvo
             </div>
 
             {/* Headline */}
-            <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-4 tracking-tight">
-              Prestani pušiti uz podršku i male pobjede
+            <h1 className="text-4xl md:text-6xl font-bold text-slate-900 mb-6 tracking-tight leading-tight">
+              Prestani pušiti uz podršku i male <span className="text-teal-600">pobjede</span>
             </h1>
 
             {/* Subtitle */}
-            <p className="text-base md:text-lg text-slate-600 mb-8 max-w-xl mx-auto">
+            <p className="text-lg md:text-xl text-slate-600 mb-10 max-w-xl mx-auto leading-relaxed">
               Prati napredak, prepoznaj okidače, izdržaj žudnju i gradi navike bez osjećaja krivnje.
             </p>
 
             {/* CTA Buttons */}
-            <div className="flex flex-col sm:flex-row gap-3 justify-center items-center mb-8">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-10">
               <Link href="/registracija">
-                <Button size="lg" className="w-full sm:w-auto">
+                <Button size="xl" className="w-full sm:w-auto shadow-lg shadow-teal-500/20 hover:shadow-xl hover:shadow-teal-500/30">
                   Započni danas
-                  <ArrowRight className="w-4 h-4" />
+                  <ArrowRight className="w-5 h-5" />
                 </Button>
               </Link>
               <Link href="/prijava">
-                <Button variant="secondary" size="lg" className="w-full sm:w-auto">
+                <Button variant="secondary" size="xl" className="w-full sm:w-auto">
                   Već imam račun
                 </Button>
               </Link>
@@ -127,15 +127,15 @@ export default function LandingPage() {
             ].map((feature, i) => (
               <div
                 key={i}
-                className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm"
+                className="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1"
               >
                 <div
-                  className={`w-10 h-10 ${feature.bg} rounded-xl flex items-center justify-center mb-4`}
+                  className={`w-12 h-12 ${feature.bg} rounded-xl flex items-center justify-center mb-5`}
                 >
-                  <feature.icon className={`w-5 h-5 ${feature.color}`} />
+                  <feature.icon className={`w-6 h-6 ${feature.color}`} />
                 </div>
-                <h3 className="text-base font-semibold text-slate-900 mb-2">{feature.title}</h3>
-                <p className="text-sm text-slate-600 leading-relaxed">{feature.description}</p>
+                <h3 className="text-lg font-semibold text-slate-900 mb-3">{feature.title}</h3>
+                <p className="text-base text-slate-600 leading-relaxed">{feature.description}</p>
               </div>
             ))}
           </div>
@@ -186,24 +186,26 @@ export default function LandingPage() {
             ].map((program, i) => (
               <div
                 key={i}
-                className={`bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm ${program.accent}`}
+                className={`bg-white border-2 border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1 ${program.accent}`}
               >
-                <div className="p-6">
-                  <div className="inline-block bg-slate-100 rounded-full px-3 py-1 text-xs font-medium text-slate-700 mb-3">
+                <div className="p-8">
+                  <div className="inline-block bg-teal-50 text-teal-700 rounded-full px-4 py-1.5 text-xs font-semibold mb-4">
                     {program.badge}
                   </div>
-                  <h3 className="text-lg font-semibold text-slate-900 mb-1">{program.name}</h3>
-                  <p className="text-xs text-slate-500 mb-3">{program.days} dana · {program.grace} grace cigareta</p>
-                  <p className="text-sm text-slate-600 mb-4">{program.description}</p>
-                  <ul className="space-y-2 mb-6">
+                  <h3 className="text-xl font-bold text-slate-900 mb-2">{program.name}</h3>
+                  <p className="text-sm text-slate-500 mb-4 font-medium">{program.days} dana · {program.grace} grace cigareta</p>
+                  <p className="text-base text-slate-600 mb-6 leading-relaxed">{program.description}</p>
+                  <ul className="space-y-3 mb-8">
                     {program.features.map((feature, j) => (
-                      <li key={j} className="flex items-center gap-2 text-sm text-slate-700">
-                        <CheckCircle className="w-4 h-4 text-teal-500 flex-shrink-0" />
-                        {feature}
+                      <li key={j} className="flex items-center gap-3 text-sm text-slate-700">
+                        <CheckCircle className="w-5 h-5 text-teal-500 flex-shrink-0" />
+                        <span>{feature}</span>
                       </li>
                     ))}
                   </ul>
-                  <Button variant="outline" className="w-full">Započni</Button>
+                  <Link href="/registracija">
+                    <Button variant="outline" className="w-full">Započni</Button>
+                  </Link>
                 </div>
               </div>
             ))}
@@ -238,14 +240,14 @@ export default function LandingPage() {
                 avatar: "J",
               },
             ].map((testimonial, i) => (
-              <div key={i} className="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
-                <div className="flex items-center gap-3 mb-3">
-                  <div className="w-10 h-10 rounded-full bg-teal-500 flex items-center justify-center text-white font-semibold">
+              <div key={i} className="bg-white border border-slate-200 rounded-2xl p-8 shadow-sm hover:shadow-md transition-all duration-300">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-teal-400 to-teal-600 flex items-center justify-center text-white font-bold text-lg shadow-md">
                     {testimonial.avatar}
                   </div>
-                  <div className="font-medium text-slate-900">{testimonial.name}</div>
+                  <div className="font-semibold text-slate-900 text-base">{testimonial.name}</div>
                 </div>
-                <p className="text-sm text-slate-600 leading-relaxed">&ldquo;{testimonial.text}&rdquo;</p>
+                <p className="text-base text-slate-600 leading-relaxed italic">&ldquo;{testimonial.text}&rdquo;</p>
               </div>
             ))}
           </div>
@@ -255,24 +257,24 @@ export default function LandingPage() {
       {/* CTA Section */}
       <section className="py-16 px-4 md:px-6">
         <div className="max-w-3xl mx-auto">
-          <div className="bg-teal-500 rounded-3xl p-8 md:p-12 text-center text-white">
-            <div className="text-4xl mb-4">🚭</div>
-            <h2 className="text-3xl md:text-4xl font-bold mb-3">
+          <div className="bg-gradient-to-br from-teal-500 to-teal-600 rounded-3xl p-10 md:p-16 text-center text-white shadow-xl">
+            <div className="text-5xl mb-6">🚭</div>
+            <h2 className="text-4xl md:text-5xl font-bold mb-5 leading-tight">
               Spreman/a za promjenu?
             </h2>
-            <p className="text-base md:text-lg opacity-90 mb-6 max-w-xl mx-auto">
-              Svaki dan bez cigarete je pobjeda. Počni danas.
+            <p className="text-lg md:text-xl mb-8 max-w-xl mx-auto leading-relaxed">
+              Svaki dan bez cigarete je pobjeda. Počni danas i promijeni život.
             </p>
             <Link href="/registracija">
               <Button
-                size="lg"
-                className="bg-white text-teal-600 hover:bg-slate-50"
+                size="xl"
+                className="bg-white text-teal-600 hover:bg-slate-50 shadow-2xl hover:scale-105 transition-transform"
               >
                 Započni besplatno
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-5 h-5" />
               </Button>
             </Link>
-            <p className="text-sm opacity-75 mt-4">Besplatno · Bez kreditne kartice</p>
+            <p className="text-sm mt-6 opacity-90">Besplatno · Bez kreditne kartice · Bez obaveza</p>
           </div>
         </div>
       </section>
