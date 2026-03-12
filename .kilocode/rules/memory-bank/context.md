@@ -1,87 +1,82 @@
-# Active Context: Next.js Starter Template
+# Active Context: Puffless — Quit Smoking App
 
 ## Current State
 
-**Template Status**: ✅ Ready for development
+**App Status**: ✅ Complete MVP — Production-ready full-stack application
 
-The template is a clean Next.js 16 starter with TypeScript and Tailwind CSS 4. It's ready for AI-assisted expansion to build any type of application.
+Puffless is a complete Croatian-language quit smoking web application built as a startup MVP.
 
 ## Recently Completed
 
-- [x] Base Next.js 16 setup with App Router
-- [x] TypeScript configuration with strict mode
-- [x] Tailwind CSS 4 integration
-- [x] ESLint configuration
-- [x] Memory bank documentation
-- [x] Recipe system for common features
+- [x] Full-stack Next.js 16 app with TypeScript and Tailwind CSS 4
+- [x] PostgreSQL database with Prisma 5 ORM
+- [x] NextAuth.js v5 authentication (email/password)
+- [x] Croatian language UI throughout
+- [x] Beautiful landing page with hero, features, testimonials
+- [x] Multi-step onboarding flow (5 steps)
+- [x] Dashboard with animated stats cards (Framer Motion)
+- [x] 10-day structured program with daily tasks
+- [x] 14 and 30-day challenge modes
+- [x] Grace cigarette system (no harsh resets)
+- [x] Craving support modal with breathing animation
+- [x] Log cigarette feature with trigger tracking
+- [x] Money saved calculations with fun equivalents
+- [x] Health milestones timeline
+- [x] Friend invite system with codes
+- [x] Challenge leaderboard
+- [x] Profile/settings page
+- [x] History and analytics page
+- [x] Achievements system
+- [x] Seed script with demo data
+- [x] README with setup instructions
 
 ## Current Structure
 
 | File/Directory | Purpose | Status |
 |----------------|---------|--------|
-| `src/app/page.tsx` | Home page | ✅ Ready |
-| `src/app/layout.tsx` | Root layout | ✅ Ready |
-| `src/app/globals.css` | Global styles | ✅ Ready |
-| `.kilocode/` | AI context & recipes | ✅ Ready |
+| `src/app/page.tsx` | Landing page | ✅ Complete |
+| `src/app/(auth)/prijava/` | Login page | ✅ Complete |
+| `src/app/(auth)/registracija/` | Registration page | ✅ Complete |
+| `src/app/onboarding/` | Onboarding flow | ✅ Complete |
+| `src/app/(app)/dashboard/` | Main dashboard | ✅ Complete |
+| `src/app/(app)/program/` | 10-day program | ✅ Complete |
+| `src/app/(app)/izazov/` | Challenges | ✅ Complete |
+| `src/app/(app)/prijatelji/` | Friends/invite | ✅ Complete |
+| `src/app/(app)/profil/` | Profile/settings | ✅ Complete |
+| `src/app/(app)/povijest/` | History/analytics | ✅ Complete |
+| `prisma/schema.prisma` | Database schema | ✅ Complete |
+| `prisma/seed.ts` | Demo data | ✅ Complete |
+| `src/lib/auth.ts` | NextAuth config | ✅ Complete |
+| `src/components/features/` | Feature modals | ✅ Complete |
+| `src/components/ui/` | UI components | ✅ Complete |
 
-## Current Focus
+## Tech Stack
 
-The template is ready. Next steps depend on user requirements:
+- **Framework**: Next.js 16 (App Router)
+- **Language**: TypeScript 5
+- **Styling**: Tailwind CSS 4
+- **Database**: PostgreSQL + Prisma 5
+- **Auth**: NextAuth.js v5 (beta)
+- **Animations**: Framer Motion 12
+- **Icons**: Lucide React
+- **Forms**: React Hook Form + Zod
+- **Package Manager**: Bun
 
-1. What type of application to build
-2. What features are needed
-3. Design/branding preferences
+## Key Design Decisions
 
-## Quick Start Guide
+1. **Grace cigarette system** — 3/4/6 grace cigarettes per program type instead of harsh resets
+2. **Croatian language only** — all UI, labels, messages in Croatian
+3. **Supportive tone** — no shaming, no guilt, progress over perfection
+4. **Gamification** — achievements, challenges, leaderboards
+5. **Prisma 5** — downgraded from Prisma 7 due to breaking API changes
 
-### To add a new page:
+## Demo Credentials
 
-Create a file at `src/app/[route]/page.tsx`:
-```tsx
-export default function NewPage() {
-  return <div>New page content</div>;
-}
-```
-
-### To add components:
-
-Create `src/components/` directory and add components:
-```tsx
-// src/components/ui/Button.tsx
-export function Button({ children }: { children: React.ReactNode }) {
-  return <button className="px-4 py-2 bg-blue-600 text-white rounded">{children}</button>;
-}
-```
-
-### To add a database:
-
-Follow `.kilocode/recipes/add-database.md`
-
-### To add API routes:
-
-Create `src/app/api/[route]/route.ts`:
-```tsx
-import { NextResponse } from "next/server";
-
-export async function GET() {
-  return NextResponse.json({ message: "Hello" });
-}
-```
-
-## Available Recipes
-
-| Recipe | File | Use Case |
-|--------|------|----------|
-| Add Database | `.kilocode/recipes/add-database.md` | Data persistence with Drizzle + SQLite |
-
-## Pending Improvements
-
-- [ ] Add more recipes (auth, email, etc.)
-- [ ] Add example components
-- [ ] Add testing setup recipe
+- **Email**: `demo@puffless.app`
+- **Password**: `demo1234`
 
 ## Session History
 
 | Date | Changes |
 |------|---------|
-| Initial | Template created with base setup |
+| 2024-03 | Complete Puffless MVP built from scratch |
