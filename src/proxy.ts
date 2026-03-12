@@ -1,10 +1,7 @@
 import { NextResponse } from "next/server"
 import type { NextRequest } from "next/server"
 
-// Edge runtime for Cloudflare compatibility
-export const runtime = "edge"
-
-// Next.js 16 expects "proxy" as the function name
+// Next.js 16 Proxy - runs on Node.js runtime (cannot be Edge)
 export default function proxy(request: NextRequest) {
   const { nextUrl } = request
   
