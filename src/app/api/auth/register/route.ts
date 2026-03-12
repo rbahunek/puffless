@@ -11,14 +11,6 @@ const registerSchema = z.object({
 
 export async function POST(request: NextRequest) {
   try {
-    // Check if DATABASE_URL is configured
-    if (!process.env.DATABASE_URL || process.env.DATABASE_URL.includes('localhost')) {
-      return NextResponse.json(
-        { error: "Baza podataka nije konfigurirana. Postavi DATABASE_URL u environment varijablama." },
-        { status: 503 }
-      )
-    }
-
     const body = await request.json()
     const parsed = registerSchema.safeParse(body)
 
