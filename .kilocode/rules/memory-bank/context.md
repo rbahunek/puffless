@@ -76,7 +76,7 @@ Puffless is a complete Croatian-language quit smoking web application built as a
 
 - **Framework**: Next.js 16 (App Router)
 - **Language**: TypeScript 5
-- **Styling**: Tailwind CSS 4
+- **Styling**: Tailwind CSS 3.4.19 (downgraded from v4 due to stability issues)
 - **Database**: PostgreSQL + Prisma 5
 - **Auth**: NextAuth.js v5 (beta)
 - **Animations**: Framer Motion 12
@@ -109,4 +109,4 @@ Puffless is a complete Croatian-language quit smoking web application built as a
 | 2026-03-12 | Committed and pushed all uncommitted changes (dashboard-client, layout, globals.css, page, card) despite typecheck errors |
 | 2026-03-12 | PROPERLY fixed hydration error by removing twMerge from Button component - used clsx only instead of cn() utility |
 | 2026-03-12 | Enhanced landing page UI: gradients, shadows, hover animations, better typography, improved CTA section |
-| 2026-03-12 | FIXED: Reverted to proper Tailwind CSS 4 CSS-first with @tailwindcss/postcss and @theme directive for custom colors |
+| 2026-03-12 | FINAL FIX: Downgraded to Tailwind CSS 3.4.19 - Tailwind CSS 4 was not generating styles properly despite multiple configuration attempts |
