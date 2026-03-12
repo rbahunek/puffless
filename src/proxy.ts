@@ -1,15 +1,10 @@
+import { auth } from "@/lib/auth"
 import { NextResponse } from "next/server"
-import type { NextRequest } from "next/server"
 
-// Next.js 16 Proxy - runs on Node.js runtime (cannot be Edge)
-export default function proxy(request: NextRequest) {
-  const { nextUrl } = request
-  
-  // Check for auth token in cookies (simple check)
-  const token = request.cookies.get("next-auth.session-token") || 
-                request.cookies.get("__Secure-next-auth.session-token")
-  
-  const isLoggedIn = !!token
+// Restored NextAuth middleware for Vercel (Node.js runtime)
+export default auth((req) => {
+  const { nextUrl } = req
+  const isLoggedIn = !!req.auth
 
   const isAuthPage = nextUrl.pathname.startsWith("/prijava") ||
     nextUrl.pathname.startsWith("/registracija")
@@ -32,7 +27,7 @@ export default function proxy(request: NextRequest) {
   }
 
   return NextResponse.next()
-}
+})
 
 export const config = {
   matcher: [
