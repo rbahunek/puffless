@@ -4,7 +4,8 @@ import type { NextRequest } from "next/server"
 // Edge runtime for Cloudflare compatibility
 export const runtime = "edge"
 
-export function middleware(request: NextRequest) {
+// Next.js 16 expects "proxy" as the function name
+export default function proxy(request: NextRequest) {
   const { nextUrl } = request
   
   // Check for auth token in cookies (simple check)
