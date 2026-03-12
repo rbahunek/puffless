@@ -86,7 +86,7 @@ bun start
 |-------------|---------|-------|
 | Next.js | 16.x | React framework (App Router) |
 | TypeScript | 5.x | Type-safe JavaScript |
-| Tailwind CSS | 4.x | Utility-first CSS |
+| Tailwind CSS | 3.4.x | Utility-first CSS |
 | Prisma | 5.x | ORM za PostgreSQL |
 | NextAuth.js | 5.x (beta) | Autentikacija |
 | Framer Motion | 12.x | Animacije |
@@ -121,19 +121,35 @@ bun install
 
 ### 3. Postavi environment varijable
 
-Kopiraj `.env.example` u `.env` i popuni vrijednosti:
+**⚠️ VAŽNO: `.env` datoteka je uključena u repozitorij sa placeholder vrijednostima. MORAŠ AŽURIRATI `DATABASE_URL`!**
 
-```bash
-cp .env.example .env
-```
-
-Uredi `.env`:
+Uredi `.env` i postavi svoju PostgreSQL connection string:
 
 ```env
 DATABASE_URL="postgresql://korisnik:lozinka@localhost:5432/puffless"
-AUTH_SECRET="generiraj-tajni-kljuc-min-32-znaka"
+AUTH_SECRET="puffless-super-secret-key-min-32-characters-long-change-this"
 NEXTAUTH_URL="http://localhost:3000"
 ```
+
+**Opcije za PostgreSQL bazu:**
+
+1. **Lokalni PostgreSQL** (najjednostavnije za development):
+   ```bash
+   # macOS
+   brew install postgresql
+   brew services start postgresql
+   createdb puffless
+   
+   # Linux
+   sudo apt install postgresql
+   sudo systemctl start postgresql
+   sudo -u postgres createdb puffless
+   ```
+
+2. **Besplatni cloud PostgreSQL**:
+   - [Neon](https://neon.tech) - besplatno 0.5GB
+   - [Supabase](https://supabase.com) - besplatno 500MB
+   - [Railway](https://railway.app) - besplatno 512MB
 
 Generiraj tajni ključ:
 ```bash
