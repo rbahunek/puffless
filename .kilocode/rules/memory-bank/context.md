@@ -41,7 +41,8 @@ Puffless is a complete Croatian-language quit smoking web application built as a
 - [x] **Mobile: Responsive header with logo on mobile**
 - [x] **Performance: Fixed pre-existing lint errors (Math.random, SidebarContent)**
 - [x] **PWA meta tags in root layout (apple-mobile-web-app-capable, etc.)**
-- [x] **Hydration fix: Memoized Button className to prevent SSR/client mismatches**
+- [x] **Hydration fix: Replaced twMerge with clsx in Button component (root cause fix)**
+- [x] **UI Enhancement: Improved landing page with gradients, shadows, and animations**
 
 ## Current Structure
 
@@ -106,4 +107,5 @@ Puffless is a complete Croatian-language quit smoking web application built as a
 | 2024-03 | Complete Puffless MVP built from scratch |
 | 2026-03 | PWA conversion: manifest, service worker, icons, bottom nav, FAB, mobile-first dashboard, install prompt, offline banner, safe area support |
 | 2026-03-12 | Committed and pushed all uncommitted changes (dashboard-client, layout, globals.css, page, card) despite typecheck errors |
-| 2026-03-12 | Fixed hydration mismatch error in Button component by memoizing className computation to ensure consistency between SSR and client |
+| 2026-03-12 | PROPERLY fixed hydration error by removing twMerge from Button component - used clsx only instead of cn() utility |
+| 2026-03-12 | Enhanced landing page UI: gradients, shadows, hover animations, better typography, improved CTA section |
