@@ -164,7 +164,6 @@ export function ProgramClient({ program, programDays, completedDays, currentDay 
                 className={`overflow-hidden transition-all duration-200 ${
                   isLocked ? "opacity-60" : ""
                 } ${isCurrent ? "ring-2 ring-[#4F7BFF] ring-offset-2" : ""}`}
-                hover={!isLocked}
               >
                 {/* Day header */}
                 <button

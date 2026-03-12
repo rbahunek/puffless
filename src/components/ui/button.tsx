@@ -6,32 +6,32 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 active:scale-95",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-xl text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 active:scale-[0.98]",
   {
     variants: {
       variant: {
         default:
-          "bg-gradient-to-r from-[#2EC4B6] to-[#4F7BFF] text-white shadow-md hover:shadow-lg hover:opacity-90 focus-visible:ring-[#2EC4B6]",
+          "bg-teal-500 text-white hover:bg-teal-600 focus-visible:ring-teal-500",
         secondary:
-          "bg-white text-[#1F2937] border border-[#E5E7EB] shadow-sm hover:bg-[#F7FAFC] hover:border-[#2EC4B6] hover:text-[#2EC4B6] focus-visible:ring-[#2EC4B6]",
+          "bg-white border border-slate-200 text-slate-800 hover:bg-slate-50 focus-visible:ring-slate-300",
         outline:
-          "border-2 border-[#2EC4B6] text-[#2EC4B6] bg-transparent hover:bg-[#e8faf9] focus-visible:ring-[#2EC4B6]",
+          "border border-teal-500 text-teal-600 bg-transparent hover:bg-teal-50 focus-visible:ring-teal-500",
         ghost:
-          "text-[#6B7280] hover:bg-[#F7FAFC] hover:text-[#1F2937] focus-visible:ring-[#2EC4B6]",
+          "text-slate-600 hover:bg-slate-100 hover:text-slate-900 focus-visible:ring-slate-300",
         destructive:
           "bg-red-500 text-white hover:bg-red-600 focus-visible:ring-red-500",
         warning:
-          "bg-gradient-to-r from-[#FF8C42] to-[#FFD166] text-white shadow-md hover:shadow-lg hover:opacity-90 focus-visible:ring-[#FF8C42]",
+          "bg-orange-500 text-white hover:bg-orange-600 focus-visible:ring-orange-500",
         success:
-          "bg-gradient-to-r from-[#10B981] to-[#2EC4B6] text-white shadow-md hover:shadow-lg hover:opacity-90 focus-visible:ring-[#10B981]",
+          "bg-emerald-500 text-white hover:bg-emerald-600 focus-visible:ring-emerald-500",
         link:
-          "text-[#2EC4B6] underline-offset-4 hover:underline p-0 h-auto",
+          "text-teal-600 underline-offset-4 hover:underline p-0 h-auto",
       },
       size: {
-        default: "h-11 px-6 py-2.5",
-        sm: "h-9 px-4 py-2 text-xs",
-        lg: "h-13 px-8 py-3 text-base",
-        xl: "h-14 px-10 py-3.5 text-base",
+        default: "h-11 px-5",
+        sm: "h-9 px-4 text-xs",
+        lg: "h-12 px-6",
+        xl: "h-14 px-8 text-base",
         icon: "h-10 w-10",
         "icon-sm": "h-8 w-8",
       },
