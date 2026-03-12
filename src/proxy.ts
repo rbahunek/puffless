@@ -1,9 +1,17 @@
-import { auth } from "@/lib/auth"
 import { NextResponse } from "next/server"
+import type { NextRequest } from "next/server"
 
-export default auth((req) => {
-  const { nextUrl } = req
-  const isLoggedIn = !!req.auth
+// Edge runtime for Cloudflare compatibility
+export const runtime = "edge"
+
+export function middleware(request: NextRequest) {
+  const { nextUrl } = request
+  
+  // Check for auth token in cookies (simple check)
+  const token = request.cookies.get("next-auth.session-token") || 
+                request.cookies.get("__Secure-next-auth.session-token")
+  
+  const isLoggedIn = !!token
 
   const isAuthPage = nextUrl.pathname.startsWith("/prijava") ||
     nextUrl.pathname.startsWith("/registracija")
@@ -26,10 +34,10 @@ export default auth((req) => {
   }
 
   return NextResponse.next()
-})
+}
 
 export const config = {
   matcher: [
-    "/((?!api|_next/static|_next/image|favicon.ico).*)",
+    "/((?!api|_next/static|_next/image|favicon.ico|icons|manifest.json|sw.js).*)",
   ],
 }
