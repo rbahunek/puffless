@@ -114,4 +114,4 @@ Puffless is a complete Croatian-language quit smoking web application built as a
 | 2026-03-12 | Fixed register API error - created .env with DATABASE_URL placeholder, updated README with database setup instructions |
 | 2026-03-12 | Reverted to Prisma + PostgreSQL (required for friends/challenges) with DATABASE_URL check and helpful error messages |
 | 2026-03-12 | Connected Neon PostgreSQL database, ran migrations, seeded demo data - database fully operational! |
-| 2026-03-12 | Hardcoded DATABASE_URL in Prisma client (src/lib/prisma.ts) for online app builder compatibility - no env var config needed |
+| 2026-03-12 | FINAL: Hardcoded DATABASE_URL directly in prisma/schema.prisma - connection string baked into Prisma client at build time |
