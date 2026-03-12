@@ -87,18 +87,24 @@ interface DashboardClientProps {
   } | null
 }
 
-const containerVariants: Variants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.08 },
-  },
-}
+  const containerVariants: Variants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { staggerChildren: 0.08 },
+    },
+  }
 
-const cardVariants: Variants = {
-  hidden: { opacity: 0, y: 16 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.35 } },
-}
+  const cardVariants: Variants = {
+    hidden: { opacity: 0, y: 16 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.35 } },
+  }
+
+  // Animation for number counters
+  const numberVariants: Variants = {
+    hidden: { opacity: 0, y: 10 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+  }
 
 export function DashboardClient({
   user,
@@ -188,19 +194,21 @@ export function DashboardClient({
         </motion.div>
 
         {/* Main stats grid - mobile: 2x2, desktop: 4 cols */}
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {/* Days counter - hero card */}
-          <motion.div variants={cardVariants} className="col-span-2 lg:col-span-1">
-            <Card className="bg-gradient-to-br from-[#2EC4B6] to-[#4F7BFF] border-0 text-white">
-              <CardContent className="p-4 sm:p-6">
-                <div className="flex items-center justify-between mb-2 sm:mb-4">
-                  <div className="text-xs sm:text-sm font-medium opacity-80">Dana u programu</div>
-                  <div className="w-7 h-7 sm:w-8 sm:h-8 bg-white/20 rounded-lg flex items-center justify-center">
-                    <Target className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                  </div>
+           <motion.div variants={cardVariants} className="col-span-1 lg:col-span-1">
+            <Card className="bg-white border border-gray-100 shadow-sm">
+              <CardContent className="p-6 flex flex-col items-center text-center">
+                <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-[#2EC4B6] to-[#4F7BFF] flex items-center justify-center mb-3">
+                  <Target className="w-6 h-6 text-white" />
                 </div>
-                <div className="text-5xl sm:text-6xl font-bold mb-1 stat-number">{stats.daysSinceQuit}</div>
-                <div className="text-xs sm:text-sm opacity-80">
+                <motion.div
+                  className="text-3xl md:text-4xl font-bold text-[#1F2937] mb-1 stat-number"
+                  variants={numberVariants}
+                >
+                  {stats.daysSinceQuit}
+                </motion.div>
+                <div className="text-xs md:text-sm text-gray-600 mb-2">
                   {stats.daysSinceQuit === 0
                     ? "Danas počinješ! 🌱"
                     : stats.daysSinceQuit === 1
@@ -208,14 +216,14 @@ export function DashboardClient({
                     : `${stats.daysSinceQuit} dana napretka! 💪`}
                 </div>
                 {program && (
-                  <div className="mt-3 sm:mt-4">
-                    <div className="flex justify-between text-xs opacity-70 mb-1">
+                  <div className="w-full mt-2">
+                    <div className="flex justify-between text-xs text-gray-400 mb-1">
                       <span>Dan {program.currentDay}</span>
                       <span>{program.type === "TEN_DAY" ? "10" : program.type === "FOURTEEN_DAY" ? "14" : "30"} dana</span>
                     </div>
-                    <div className="h-1.5 bg-white/30 rounded-full overflow-hidden">
+                    <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
                       <div
-                        className="h-full bg-white rounded-full transition-all duration-1000"
+                        className="h-full bg-gradient-to-r from-[#2EC4B6] to-[#4F7BFF] rounded-full transition-all duration-1000"
                         style={{ width: `${programProgress}%` }}
                       />
                     </div>
@@ -226,7 +234,7 @@ export function DashboardClient({
           </motion.div>
 
           {/* Money saved */}
-          <motion.div variants={cardVariants}>
+           <motion.div variants={cardVariants} className="col-span-1">
             <Card className="h-full">
               <CardContent className="p-4 sm:p-6 h-full flex flex-col">
                 <div className="flex items-center justify-between mb-2 sm:mb-4">
@@ -235,9 +243,12 @@ export function DashboardClient({
                     <Euro className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#FFD166]" />
                   </div>
                 </div>
-                <div className="text-2xl sm:text-3xl font-bold text-[#1F2937] mb-1 stat-number">
+                <motion.div
+                  className="text-2xl sm:text-3xl font-bold text-[#1F2937] mb-1 stat-number"
+                  variants={numberVariants}
+                >
                   {formatCurrency(stats.moneySaved)}
-                </div>
+                </motion.div>
                 <div className="text-xs sm:text-sm text-[#2EC4B6] font-medium">
                   {getMoneyEquivalent(stats.moneySaved)} 🎉
                 </div>
@@ -249,7 +260,7 @@ export function DashboardClient({
           </motion.div>
 
           {/* Cigarettes avoided */}
-          <motion.div variants={cardVariants}>
+           <motion.div variants={cardVariants} className="col-span-1">
             <Card className="h-full">
               <CardContent className="p-4 sm:p-6 h-full flex flex-col">
                 <div className="flex items-center justify-between mb-2 sm:mb-4">
@@ -258,9 +269,12 @@ export function DashboardClient({
                     <Cigarette className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#4F7BFF]" />
                   </div>
                 </div>
-                <div className="text-2xl sm:text-3xl font-bold text-[#1F2937] mb-1 stat-number">
+                <motion.div
+                  className="text-2xl sm:text-3xl font-bold text-[#1F2937] mb-1 stat-number"
+                  variants={numberVariants}
+                >
                   {stats.cigarettesAvoided}
-                </div>
+                </motion.div>
                 <div className="text-xs sm:text-sm text-[#6B7280]">
                   cigareta
                 </div>
@@ -272,7 +286,7 @@ export function DashboardClient({
           </motion.div>
 
           {/* Health milestones */}
-          <motion.div variants={cardVariants}>
+           <motion.div variants={cardVariants} className="col-span-1">
             <Card className="h-full">
               <CardContent className="p-4 sm:p-6 h-full flex flex-col">
                 <div className="flex items-center justify-between mb-2 sm:mb-4">
@@ -281,9 +295,12 @@ export function DashboardClient({
                     <Heart className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-500" />
                   </div>
                 </div>
-                <div className="text-2xl sm:text-3xl font-bold text-[#1F2937] mb-1 stat-number">
+                <motion.div
+                  className="text-2xl sm:text-3xl font-bold text-[#1F2937] mb-1 stat-number"
+                  variants={numberVariants}
+                >
                   {stats.achievedMilestones}/{stats.totalMilestones}
-                </div>
+                </motion.div>
                 <div className="text-xs sm:text-sm text-[#6B7280]">
                   prekretnica
                 </div>
@@ -305,21 +322,39 @@ export function DashboardClient({
                 <h3 className="font-semibold text-[#1F2937] mb-3 text-sm sm:text-base">Danas</h3>
                 <div className="grid grid-cols-4 gap-2 sm:gap-4">
                   <div className="text-center">
-                    <div className="text-xl sm:text-2xl font-bold text-[#1F2937] stat-number">{todayProgress.cigarettesSmoked}</div>
+                    <motion.div
+                      className="text-xl sm:text-2xl font-bold text-[#1F2937] stat-number"
+                      variants={numberVariants}
+                    >
+                      {todayProgress.cigarettesSmoked}
+                    </motion.div>
                     <div className="text-[10px] sm:text-xs text-[#6B7280] leading-tight">cigareta</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-xl sm:text-2xl font-bold text-[#1F2937] stat-number">{todayProgress.cravingsLogged}</div>
+                    <motion.div
+                      className="text-xl sm:text-2xl font-bold text-[#1F2937] stat-number"
+                      variants={numberVariants}
+                    >
+                      {todayProgress.cravingsLogged}
+                    </motion.div>
                     <div className="text-[10px] sm:text-xs text-[#6B7280] leading-tight">žudnji</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-xl sm:text-2xl font-bold text-[#1F2937] stat-number">{todayProgress.cravingsResolved}</div>
+                    <motion.div
+                      className="text-xl sm:text-2xl font-bold text-[#1F2937] stat-number"
+                      variants={numberVariants}
+                    >
+                      {todayProgress.cravingsResolved}
+                    </motion.div>
                     <div className="text-[10px] sm:text-xs text-[#6B7280] leading-tight">riješeno</div>
                   </div>
                   <div className="text-center">
-                    <div className="text-xl sm:text-2xl font-bold text-[#1F2937]">
+                    <motion.div
+                      className="text-xl sm:text-2xl font-bold text-[#1F2937]"
+                      variants={numberVariants}
+                    >
                       {todayProgress.taskCompleted ? "✓" : "—"}
-                    </div>
+                    </motion.div>
                     <div className="text-[10px] sm:text-xs text-[#6B7280] leading-tight">zadatak</div>
                   </div>
                 </div>

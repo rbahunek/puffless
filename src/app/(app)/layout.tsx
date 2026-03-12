@@ -18,14 +18,14 @@ export default async function AppLayout({
   }
 
   return (
-    <div className="min-h-screen bg-[#F7FAFC] flex">
+    <div className="min-h-screen bg-[#F7FAFC] flex justify-center">
       {/* Desktop Sidebar - hidden on mobile */}
       <AppSidebar user={session.user} />
 
-      {/* Main content */}
-      <div className="flex-1 flex flex-col min-h-screen lg:ml-64">
+      {/* Main content, centered and max-w-5xl */}
+      <div className="flex-1 flex flex-col min-h-screen lg:ml-64 items-center">
         <AppHeader user={session.user} />
-        <main className="flex-1 p-3 sm:p-4 lg:p-8 max-w-7xl w-full mx-auto pb-safe-bottom">
+        <main className="flex-1 w-full max-w-5xl px-2 sm:px-6 lg:px-8 py-6 sm:py-10 lg:py-16 pb-safe-bottom">
           {children}
         </main>
       </div>

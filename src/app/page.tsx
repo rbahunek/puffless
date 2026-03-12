@@ -7,7 +7,7 @@ export default function LandingPage() {
     <div className="min-h-screen bg-[#F7FAFC]">
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-[#E5E7EB]">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#2EC4B6] to-[#4F7BFF] flex items-center justify-center">
@@ -31,8 +31,7 @@ export default function LandingPage() {
 
       {/* Hero Section */}
       <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center max-w-4xl mx-auto">
+        <div className="max-w-3xl mx-auto text-center">
             {/* Badge */}
             <div className="inline-flex items-center gap-2 bg-[#e8faf9] text-[#2EC4B6] rounded-full px-4 py-2 text-sm font-semibold mb-8">
               <span className="w-2 h-2 bg-[#2EC4B6] rounded-full animate-pulse"></span>
@@ -40,7 +39,7 @@ export default function LandingPage() {
             </div>
 
             {/* Headline */}
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-[#1F2937] mb-6 leading-tight" style={{ fontFamily: "Poppins, sans-serif" }}>
+            <h1 className="text-4xl md:text-5xl font-bold text-[#1F2937] mb-6 leading-tight mx-auto max-w-2xl" style={{ fontFamily: "Poppins, sans-serif" }}>
               Prestani pušiti uz{" "}
               <span className="bg-gradient-to-r from-[#2EC4B6] to-[#4F7BFF] bg-clip-text text-transparent">
                 podršku
@@ -53,20 +52,20 @@ export default function LandingPage() {
             </h1>
 
             {/* Subtitle */}
-            <p className="text-xl text-[#6B7280] mb-10 max-w-2xl mx-auto leading-relaxed">
+            <p className="text-lg text-[#6B7280] mb-10 max-w-xl mx-auto leading-relaxed">
               Puffless ti pomaže pratiti ušteđeni novac, prepoznati okidače, izdržati žudnju i graditi navike bez osjećaja krivnje.
             </p>
 
             {/* CTA Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Link href="/registracija">
-                <Button size="xl" className="w-full sm:w-auto group">
+                <Button size="xl" className="w-full sm:w-auto group bg-teal-500 text-white rounded-xl px-6 py-3 text-lg font-semibold shadow-md hover:bg-teal-600 transition">
                   Započni danas
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>
               <Link href="/prijava">
-                <Button variant="secondary" size="xl" className="w-full sm:w-auto">
+                <Button variant="secondary" size="xl" className="w-full sm:w-auto text-lg font-semibold px-6 py-3 rounded-xl">
                   Već imam račun
                 </Button>
               </Link>
@@ -100,10 +99,9 @@ export default function LandingPage() {
           </div>
 
           {/* Hero illustration / mockup */}
-          <div className="mt-16 relative">
-            <div className="absolute inset-0 bg-gradient-to-r from-[#2EC4B6]/10 to-[#4F7BFF]/10 rounded-3xl blur-3xl"></div>
-            <div className="relative bg-white rounded-3xl shadow-2xl border border-[#E5E7EB] overflow-hidden p-8">
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="mt-20 flex justify-center">
+            <div className="relative bg-white rounded-3xl shadow-2xl border border-[#E5E7EB] overflow-hidden p-8 w-full max-w-2xl mx-auto">
+           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {/* Mock dashboard cards */}
                 <div className="bg-gradient-to-br from-[#2EC4B6] to-[#4F7BFF] rounded-2xl p-6 text-white">
                   <div className="text-sm font-medium opacity-80 mb-1">Dana u programu</div>
@@ -148,16 +146,11 @@ export default function LandingPage() {
 
       {/* Features Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-[#1F2937] mb-4" style={{ fontFamily: "Poppins, sans-serif" }}>
-              Sve što ti treba za uspjeh
-            </h2>
-            <p className="text-lg text-[#6B7280] max-w-2xl mx-auto">
-              Puffless kombinira praćenje napretka, podršku u teškim trenucima i gamifikaciju u jednu cjelinu.
-            </p>
+           <h2 className="text-2xl md:text-3xl font-semibold text-[#1F2937] mb-4 font-sans">Sve što ti treba za uspjeh</h2>
+           <p className="text-sm md:text-lg text-gray-600 max-w-xl mx-auto font-sans">Puffless kombinira praćenje napretka, podršku u teškim trenucima i gamifikaciju u jednu cjelinu.</p>
           </div>
-
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               {
@@ -191,7 +184,7 @@ export default function LandingPage() {
             ].map((feature, i) => (
               <div
                 key={i}
-                className="bg-[#F7FAFC] rounded-2xl p-6 hover:shadow-lg transition-all duration-200 hover:-translate-y-1"
+                className="bg-white rounded-2xl border border-gray-100 p-6 shadow-sm hover:shadow-md transition"
               >
                 <div
                   className="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
@@ -199,8 +192,8 @@ export default function LandingPage() {
                 >
                   <feature.icon className="w-6 h-6" style={{ color: feature.color }} />
                 </div>
-                <h3 className="text-lg font-semibold text-[#1F2937] mb-2">{feature.title}</h3>
-                <p className="text-sm text-[#6B7280] leading-relaxed">{feature.description}</p>
+                <h3 className="text-lg font-semibold text-[#1F2937] mb-2 font-sans">{feature.title}</h3>
+                <p className="text-sm text-gray-600 leading-relaxed font-sans">{feature.description}</p>
               </div>
             ))}
           </div>
@@ -210,7 +203,7 @@ export default function LandingPage() {
       {/* Grace System Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div>
               <div className="inline-flex items-center gap-2 bg-[#fff4ed] text-[#FF8C42] rounded-full px-4 py-2 text-sm font-semibold mb-6">
                 <Shield className="w-4 h-4" />
@@ -319,29 +312,30 @@ export default function LandingPage() {
                 badge: "Napredno",
               },
             ].map((program, i) => (
-              <div
-                key={i}
-                className="bg-white rounded-2xl border border-[#E5E7EB] overflow-hidden hover:shadow-xl transition-all duration-200 hover:-translate-y-1"
-              >
-                <div className={`bg-gradient-to-r ${program.color} p-6 text-white`}>
-                  <div className="inline-block bg-white/20 rounded-full px-3 py-1 text-xs font-semibold mb-3">
-                    {program.badge}
-                  </div>
-                  <h3 className="text-xl font-bold mb-1">{program.name}</h3>
-                  <p className="text-sm opacity-80">{program.days} dana · {program.grace} grace cigareta</p>
-                </div>
-                <div className="p-6">
-                  <p className="text-sm text-[#6B7280] mb-4">{program.description}</p>
-                  <ul className="space-y-2">
-                    {program.features.map((feature, j) => (
-                      <li key={j} className="flex items-center gap-2 text-sm text-[#374151]">
-                        <CheckCircle className="w-4 h-4 text-[#2EC4B6] flex-shrink-0" />
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
+               <div
+                 key={i}
+                 className="bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm flex flex-col"
+               >
+                 <div className={`bg-gradient-to-r ${program.color} p-6 text-white flex flex-col items-start`}>
+                   <div className="inline-block bg-white/20 rounded-full px-3 py-1 text-xs font-semibold mb-3">
+                     {program.badge}
+                   </div>
+                   <h3 className="text-lg font-semibold mb-1 font-sans">{program.name}</h3>
+                   <p className="text-xs opacity-80 mb-2">{program.days} dana · {program.grace} grace cigareta</p>
+                 </div>
+                 <div className="p-6 flex flex-col flex-1">
+                   <p className="text-sm text-gray-600 mb-4 font-sans">{program.description}</p>
+                   <ul className="space-y-2 mb-4">
+                     {program.features.map((feature, j) => (
+                       <li key={j} className="flex items-center gap-2 text-sm text-[#374151] font-sans">
+                         <CheckCircle className="w-4 h-4 text-[#2EC4B6] flex-shrink-0" />
+                         {feature}
+                       </li>
+                     ))}
+                   </ul>
+                   <button className="mt-auto bg-[#2EC4B6] hover:bg-[#25a99d] text-white rounded-xl px-4 py-2 text-sm font-semibold transition">Započni</button>
+                 </div>
+               </div>
             ))}
           </div>
         </div>
@@ -349,14 +343,12 @@ export default function LandingPage() {
 
       {/* Testimonials */}
       <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-[#1F2937] mb-4" style={{ fontFamily: "Poppins, sans-serif" }}>
-              Što kažu korisnici
-            </h2>
-          </div>
+           <div className="max-w-5xl mx-auto">
+           <div className="text-center mb-16">
+             <h2 className="text-2xl md:text-3xl font-semibold text-[#1F2937] mb-4 font-sans">Što kažu korisnici</h2>
+           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
               {
                 name: "Ana K.",
@@ -380,25 +372,23 @@ export default function LandingPage() {
                 color: "#FF8C42",
               },
             ].map((testimonial, i) => (
-              <div key={i} className="bg-white rounded-2xl p-6 shadow-md border border-[#E5E7EB]">
-                <div className="flex items-center gap-3 mb-4">
+              <div key={i} className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex flex-col items-center text-center">
+                <div className="flex flex-col items-center gap-2 mb-4">
                   <div
-                    className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold"
+                    className="w-10 h-10 rounded-full flex items-center justify-center text-white font-bold text-lg mb-1"
                     style={{ backgroundColor: testimonial.color }}
                   >
                     {testimonial.avatar}
                   </div>
-                  <div>
-                    <div className="font-semibold text-[#1F2937]">{testimonial.name}</div>
-                    <div className="text-xs text-[#6B7280]">{testimonial.days} dana bez cigarete</div>
-                  </div>
+                  <div className="font-semibold text-[#1F2937]">{testimonial.name}</div>
+                  <div className="text-xs text-[#6B7280]">{testimonial.days} dana bez cigarete</div>
                 </div>
-                <div className="flex mb-3">
+                <div className="flex mb-3 justify-center">
                   {[1,2,3,4,5].map(j => (
                     <Star key={j} className="w-4 h-4 fill-[#FFD166] text-[#FFD166]" />
                   ))}
                 </div>
-                <p className="text-sm text-[#374151] leading-relaxed">&ldquo;{testimonial.text}&rdquo;</p>
+                <p className="text-sm text-gray-600 leading-relaxed font-sans max-w-xs">&ldquo;{testimonial.text}&rdquo;</p>
               </div>
             ))}
           </div>
