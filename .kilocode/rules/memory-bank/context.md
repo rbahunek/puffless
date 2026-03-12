@@ -109,4 +109,4 @@ Puffless is a complete Croatian-language quit smoking web application built as a
 | 2026-03-12 | Committed and pushed all uncommitted changes (dashboard-client, layout, globals.css, page, card) despite typecheck errors |
 | 2026-03-12 | PROPERLY fixed hydration error by removing twMerge from Button component - used clsx only instead of cn() utility |
 | 2026-03-12 | Enhanced landing page UI: gradients, shadows, hover animations, better typography, improved CTA section |
-| 2026-03-12 | CRITICAL FIX: Switched from Tailwind CSS 4 CSS-first (@import "tailwindcss") to standard Tailwind directives (@tailwind) - this was causing ALL styles to not apply |
+| 2026-03-12 | FIXED: Reverted to proper Tailwind CSS 4 CSS-first with @tailwindcss/postcss and @theme directive for custom colors |
