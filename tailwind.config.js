@@ -5,6 +5,22 @@ module.exports = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  safelist: [
+    // Ensure critical classes are always generated
+    'bg-teal-50',
+    'bg-teal-100',
+    'bg-teal-500',
+    'bg-teal-600',
+    'text-teal-600',
+    'text-teal-700',
+    'border-teal-500',
+    'from-teal-50',
+    'to-slate-50',
+    'from-teal-500',
+    'to-teal-600',
+    'shadow-teal-500/20',
+    'shadow-teal-500/30',
+  ],
   theme: {
     extend: {
       colors: {
