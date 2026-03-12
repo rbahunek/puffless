@@ -31,7 +31,8 @@ export default function LandingPage() {
 
       {/* Hero Section */}
       <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-3xl mx-auto text-center">
+        <div className="max-w-5xl mx-auto">
+          <div className="max-w-3xl mx-auto text-center">
             {/* Badge */}
             <div className="inline-flex items-center gap-2 bg-[#e8faf9] text-[#2EC4B6] rounded-full px-4 py-2 text-sm font-semibold mb-8">
               <span className="w-2 h-2 bg-[#2EC4B6] rounded-full animate-pulse"></span>
@@ -101,7 +102,7 @@ export default function LandingPage() {
           {/* Hero illustration / mockup */}
           <div className="mt-20 flex justify-center">
             <div className="relative bg-white rounded-3xl shadow-2xl border border-[#E5E7EB] overflow-hidden p-8 w-full max-w-2xl mx-auto">
-           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {/* Mock dashboard cards */}
                 <div className="bg-gradient-to-br from-[#2EC4B6] to-[#4F7BFF] rounded-2xl p-6 text-white">
                   <div className="text-sm font-medium opacity-80 mb-1">Dana u programu</div>

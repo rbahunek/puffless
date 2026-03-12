@@ -104,3 +104,4 @@ Puffless is a complete Croatian-language quit smoking web application built as a
 |------|---------|
 | 2024-03 | Complete Puffless MVP built from scratch |
 | 2026-03 | PWA conversion: manifest, service worker, icons, bottom nav, FAB, mobile-first dashboard, install prompt, offline banner, safe area support |
+| 2026-03-12 | Committed and pushed all uncommitted changes (dashboard-client, layout, globals.css, page, card) despite typecheck errors |
