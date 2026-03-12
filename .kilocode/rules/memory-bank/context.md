@@ -111,3 +111,4 @@ Puffless is a complete Croatian-language quit smoking web application built as a
 | 2026-03-12 | Enhanced landing page UI: gradients, shadows, hover animations, better typography, improved CTA section |
 | 2026-03-12 | FINAL FIX: Downgraded to Tailwind CSS 3.4.19 - Tailwind CSS 4 was not generating styles properly despite multiple configuration attempts |
 | 2026-03-12 | Added safelist to tailwind.config.js and cleared .next cache, ran production build successfully |
+| 2026-03-12 | Fixed register API error - created .env with DATABASE_URL placeholder, updated README with database setup instructions |
