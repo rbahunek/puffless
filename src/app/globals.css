@@ -1,8 +1,20 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  /* Custom teal color scale */
+  --color-teal-50: #e8faf9;
+  --color-teal-100: #d1f5f2;
+  --color-teal-200: #a3ebe5;
+  --color-teal-300: #75e1d8;
+  --color-teal-400: #47d7cb;
+  --color-teal-500: #2EC4B6;
+  --color-teal-600: #25a99d;
+  --color-teal-700: #1c7f76;
+  --color-teal-800: #13544f;
+  --color-teal-900: #0a2a28;
+}
 
 :root {
   /* Restrained color palette */
