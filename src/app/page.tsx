@@ -130,11 +130,11 @@ export default function LandingPage() {
                   <div className="text-3xl font-bold text-[#1F2937]">140</div>
                   <div className="text-sm text-[#6B7280] mt-1">Tvoja pluća ti hvale!</div>
                   <div className="mt-3 flex gap-1">
-                    {[1,2,3,4,5,6,7].map(i => (
+                    {[65, 45, 80, 55, 70, 40, 90].map((height, i) => (
                       <div key={i} className="flex-1 h-6 bg-[#e8faf9] rounded-sm flex items-end">
                         <div
                           className="w-full bg-[#2EC4B6] rounded-sm"
-                          style={{ height: `${Math.random() * 80 + 20}%` }}
+                          style={{ height: `${height}%` }}
                         ></div>
                       </div>
                     ))}

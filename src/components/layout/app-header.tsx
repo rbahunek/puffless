@@ -1,6 +1,7 @@
 "use client"
 
-import { Bell } from "lucide-react"
+import Link from "next/link"
+import { Cigarette } from "lucide-react"
 
 interface AppHeaderProps {
   user: {
@@ -18,8 +19,18 @@ export function AppHeader({ user }: AppHeaderProps) {
   }
 
   return (
-    <header className="sticky top-0 z-30 bg-white/80 backdrop-blur-md border-b border-[#E5E7EB] px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between lg:pl-8">
-      <div className="lg:hidden w-10" /> {/* Spacer for mobile menu button */}
+    <header className="sticky top-0 z-30 bg-white/90 backdrop-blur-md border-b border-[#E5E7EB] px-4 sm:px-6 lg:px-8 h-14 sm:h-16 flex items-center justify-between">
+      {/* Mobile: Logo */}
+      <Link href="/dashboard" className="lg:hidden flex items-center gap-2">
+        <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-[#2EC4B6] to-[#4F7BFF] flex items-center justify-center flex-shrink-0">
+          <Cigarette className="w-4 h-4 text-white" />
+        </div>
+        <span className="text-lg font-bold text-[#1F2937]" style={{ fontFamily: "Poppins, sans-serif" }}>
+          Puffless
+        </span>
+      </Link>
+
+      {/* Desktop: Greeting */}
       <div className="hidden lg:block">
         <p className="text-sm text-[#6B7280]">
           {greeting()},{" "}
@@ -29,10 +40,10 @@ export function AppHeader({ user }: AppHeaderProps) {
           👋
         </p>
       </div>
-      <div className="flex items-center gap-3 ml-auto">
-        <button className="w-9 h-9 rounded-xl bg-[#F7FAFC] border border-[#E5E7EB] flex items-center justify-center hover:bg-[#e8faf9] hover:border-[#2EC4B6] transition-all duration-200">
-          <Bell className="w-4 h-4 text-[#6B7280]" />
-        </button>
+
+      {/* Right side - empty for now, can add notifications later */}
+      <div className="flex items-center gap-2 ml-auto lg:ml-0">
+        {/* Future: notification bell */}
       </div>
     </header>
   )

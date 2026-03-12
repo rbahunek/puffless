@@ -12,7 +12,6 @@ import {
   History,
   User,
   LogOut,
-  Menu,
   X,
   Cigarette,
 } from "lucide-react"
@@ -27,23 +26,22 @@ const navItems = [
   { href: "/profil", label: "Profil", icon: User },
 ]
 
-interface AppSidebarProps {
+interface SidebarContentProps {
   user: {
     name?: string | null
     email?: string | null
     image?: string | null
   }
+  pathname: string
+  onNavClick: () => void
 }
 
-export function AppSidebar({ user }: AppSidebarProps) {
-  const pathname = usePathname()
-  const [mobileOpen, setMobileOpen] = useState(false)
-
+function SidebarContent({ user, pathname, onNavClick }: SidebarContentProps) {
   const initials = user.name
     ? user.name.split(" ").map((n) => n[0]).join("").toUpperCase().slice(0, 2)
     : user.email?.[0].toUpperCase() || "U"
 
-  const SidebarContent = () => (
+  return (
     <div className="flex flex-col h-full">
       {/* Logo */}
       <div className="p-6 border-b border-[#E5E7EB]">
@@ -65,7 +63,7 @@ export function AppSidebar({ user }: AppSidebarProps) {
             <Link
               key={item.href}
               href={item.href}
-              onClick={() => setMobileOpen(false)}
+              onClick={onNavClick}
               className={cn(
                 "flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200",
                 isActive
@@ -111,21 +109,26 @@ export function AppSidebar({ user }: AppSidebarProps) {
       </div>
     </div>
   )
+}
+
+interface AppSidebarProps {
+  user: {
+    name?: string | null
+    email?: string | null
+    image?: string | null
+  }
+}
+
+export function AppSidebar({ user }: AppSidebarProps) {
+  const pathname = usePathname()
+  const [mobileOpen, setMobileOpen] = useState(false)
 
   return (
     <>
       {/* Desktop sidebar */}
       <aside className="hidden lg:flex fixed left-0 top-0 bottom-0 w-64 bg-white border-r border-[#E5E7EB] flex-col z-40">
-        <SidebarContent />
+        <SidebarContent user={user} pathname={pathname} onNavClick={() => {}} />
       </aside>
-
-      {/* Mobile menu button */}
-      <button
-        onClick={() => setMobileOpen(true)}
-        className="lg:hidden fixed top-4 left-4 z-50 w-10 h-10 bg-white rounded-xl shadow-md border border-[#E5E7EB] flex items-center justify-center"
-      >
-        <Menu className="w-5 h-5 text-[#374151]" />
-      </button>
 
       {/* Mobile overlay */}
       {mobileOpen && (
@@ -148,7 +151,7 @@ export function AppSidebar({ user }: AppSidebarProps) {
         >
           <X className="w-5 h-5 text-[#374151]" />
         </button>
-        <SidebarContent />
+        <SidebarContent user={user} pathname={pathname} onNavClick={() => setMobileOpen(false)} />
       </aside>
     </>
   )

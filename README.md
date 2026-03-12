@@ -2,12 +2,72 @@
 
 **Prestani pušiti uz podršku, napredak i male pobjede svaki dan.**
 
-Puffless je moderna web aplikacija za pomoć pri prestanku pušenja. Koristi gamifikaciju, praćenje napretka, podršku pri žudnji i socijalne izazove — sve bez osjećaja krivnje.
+Puffless je moderna **Progressive Web App (PWA)** za pomoć pri prestanku pušenja. Koristi gamifikaciju, praćenje napretka, podršku pri žudnji i socijalne izazove — sve bez osjećaja krivnje. Instalira se na mobitel kao nativna aplikacija.
+
+---
+
+## 📱 Progressive Web App (PWA)
+
+Puffless je potpuno instalabilan kao PWA na mobilnim uređajima i desktop računalima.
+
+### Što je PWA?
+
+Progressive Web App je web aplikacija koja se ponaša kao nativna mobilna aplikacija:
+- **Instalabilan** — dodaj na početni zaslon telefona
+- **Offline podrška** — radi i bez internetske veze (prikazuje zadnje podatke)
+- **Brzo učitavanje** — cachira statičke resurse
+- **Push obavijesti** — (buduća nadogradnja)
+- **Fullscreen** — radi bez adresne trake preglednika
+
+### Instalacija na mobitel
+
+#### Android (Chrome)
+1. Otvori Puffless u Chrome pregledniku
+2. Klikni na "Instaliraj Puffless" banner koji se pojavi
+3. Ili: izbornik (⋮) → "Dodaj na početni zaslon"
+
+#### iOS (Safari)
+1. Otvori Puffless u Safari pregledniku
+2. Klikni na gumb "Dijeli" (□↑)
+3. Odaberi "Dodaj na početni zaslon"
+4. Potvrdi instalaciju
+
+#### Desktop (Chrome/Edge)
+1. Klikni na ikonu instalacije u adresnoj traci
+2. Ili: izbornik → "Instaliraj Puffless"
+
+### Testiranje PWA lokalno
+
+```bash
+# Build produkcijsku verziju
+bun build
+
+# Pokreni produkcijski server
+bun start
+```
+
+> ⚠️ Service Worker radi samo u produkcijskom buildu ili na HTTPS. Za lokalno testiranje koristi `bun start` umjesto `bun dev`.
+
+### Podržani preglednici
+
+| Preglednik | PWA Instalacija | Offline | Push obavijesti |
+|-----------|----------------|---------|----------------|
+| Chrome (Android) | ✅ | ✅ | ✅ |
+| Safari (iOS 16.4+) | ✅ | ✅ | ✅ |
+| Chrome (Desktop) | ✅ | ✅ | ✅ |
+| Edge (Desktop) | ✅ | ✅ | ✅ |
+| Firefox | ❌ | ✅ | ✅ |
+| Samsung Internet | ✅ | ✅ | ✅ |
 
 ---
 
 ## 🌟 Značajke
 
+- **📱 Mobile-first dizajn** — optimizirano za mobitele, radi i na desktopu
+- **🔽 Bottom navigacija** — brza navigacija palcem na mobilnim uređajima
+- **⚡ FAB gumb** — brzi pristup podršci pri žudnji
+- **📲 PWA instalacija** — dodaj na početni zaslon
+- **🔌 Offline podrška** — radi bez interneta
 - **Praćenje napretka** — dani, preskočene cigarete, ušteđeni novac
 - **Grace sustav** — jedna cigareta ne briše sav trud (3-6 grace cigareta po programu)
 - **10-dnevni program** — strukturirani dnevni zadaci i refleksije
@@ -141,8 +201,14 @@ src/
 │   │   ├── craving-modal   # Modal za žudnju
 │   │   └── log-cigarette-modal # Modal za bilježenje
 │   ├── layout/             # Layout komponente
-│   │   ├── app-sidebar     # Bočna navigacija
-│   │   └── app-header      # Zaglavlje
+│   │   ├── app-sidebar     # Bočna navigacija (desktop)
+│   │   ├── app-header      # Zaglavlje
+│   │   ├── bottom-nav      # Donja navigacija (mobile)
+│   │   └── fab             # Floating Action Button (mobile)
+│   ├── pwa/                # PWA komponente
+│   │   ├── install-prompt  # Prompt za instalaciju
+│   │   ├── offline-banner  # Banner za offline stanje
+│   │   └── service-worker-register # Registracija SW
 │   └── ui/                 # UI komponente
 │       ├── badge           # Badge
 │       ├── button          # Button

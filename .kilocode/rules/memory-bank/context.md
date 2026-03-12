@@ -2,9 +2,9 @@
 
 ## Current State
 
-**App Status**: ✅ Complete MVP — Production-ready full-stack application
+**App Status**: ✅ Complete MVP — Production-ready full-stack PWA application
 
-Puffless is a complete Croatian-language quit smoking web application built as a startup MVP.
+Puffless is a complete Croatian-language quit smoking web application built as a startup MVP, now enhanced as a mobile-first Progressive Web App (PWA).
 
 ## Recently Completed
 
@@ -29,6 +29,18 @@ Puffless is a complete Croatian-language quit smoking web application built as a
 - [x] Achievements system
 - [x] Seed script with demo data
 - [x] README with setup instructions
+- [x] **PWA: manifest.json with full icon set (72px to 512px + maskable)**
+- [x] **PWA: Service worker with offline caching and offline banner**
+- [x] **PWA: Install prompt component for mobile browsers**
+- [x] **PWA: Offline banner ("Nema internetske veze...")**
+- [x] **Mobile: Bottom navigation bar (Dashboard, Program, Izazovi, Povijest, Profil)**
+- [x] **Mobile: Floating Action Button (FAB) for craving support**
+- [x] **Mobile: Safe area support (env(safe-area-inset-bottom))**
+- [x] **Mobile: Mobile-first dashboard layout (2x2 stats grid on mobile)**
+- [x] **Mobile: Collapsible health timeline on mobile**
+- [x] **Mobile: Responsive header with logo on mobile**
+- [x] **Performance: Fixed pre-existing lint errors (Math.random, SidebarContent)**
+- [x] **PWA meta tags in root layout (apple-mobile-web-app-capable, etc.)**
 
 ## Current Structure
 
@@ -38,7 +50,7 @@ Puffless is a complete Croatian-language quit smoking web application built as a
 | `src/app/(auth)/prijava/` | Login page | ✅ Complete |
 | `src/app/(auth)/registracija/` | Registration page | ✅ Complete |
 | `src/app/onboarding/` | Onboarding flow | ✅ Complete |
-| `src/app/(app)/dashboard/` | Main dashboard | ✅ Complete |
+| `src/app/(app)/dashboard/` | Main dashboard | ✅ Complete (mobile-first) |
 | `src/app/(app)/program/` | 10-day program | ✅ Complete |
 | `src/app/(app)/izazov/` | Challenges | ✅ Complete |
 | `src/app/(app)/prijatelji/` | Friends/invite | ✅ Complete |
@@ -49,6 +61,14 @@ Puffless is a complete Croatian-language quit smoking web application built as a
 | `src/lib/auth.ts` | NextAuth config | ✅ Complete |
 | `src/components/features/` | Feature modals | ✅ Complete |
 | `src/components/ui/` | UI components | ✅ Complete |
+| `src/components/layout/bottom-nav.tsx` | Mobile bottom nav | ✅ New |
+| `src/components/layout/fab.tsx` | Floating Action Button | ✅ New |
+| `src/components/pwa/install-prompt.tsx` | PWA install prompt | ✅ New |
+| `src/components/pwa/offline-banner.tsx` | Offline banner | ✅ New |
+| `src/components/pwa/service-worker-register.tsx` | SW registration | ✅ New |
+| `public/manifest.json` | PWA manifest | ✅ New |
+| `public/sw.js` | Service worker | ✅ New |
+| `public/icons/` | PWA icons (72-512px) | ✅ New |
 
 ## Tech Stack
 
@@ -61,6 +81,7 @@ Puffless is a complete Croatian-language quit smoking web application built as a
 - **Icons**: Lucide React
 - **Forms**: React Hook Form + Zod
 - **Package Manager**: Bun
+- **PWA**: Custom service worker + Web App Manifest
 
 ## Key Design Decisions
 
@@ -69,6 +90,8 @@ Puffless is a complete Croatian-language quit smoking web application built as a
 3. **Supportive tone** — no shaming, no guilt, progress over perfection
 4. **Gamification** — achievements, challenges, leaderboards
 5. **Prisma 5** — downgraded from Prisma 7 due to breaking API changes
+6. **Mobile-first PWA** — bottom nav on mobile, sidebar on desktop, FAB for craving support
+7. **Safe area support** — env(safe-area-inset-bottom) for iPhone notch/gesture bar
 
 ## Demo Credentials
 
@@ -80,3 +103,4 @@ Puffless is a complete Croatian-language quit smoking web application built as a
 | Date | Changes |
 |------|---------|
 | 2024-03 | Complete Puffless MVP built from scratch |
+| 2026-03 | PWA conversion: manifest, service worker, icons, bottom nav, FAB, mobile-first dashboard, install prompt, offline banner, safe area support |
