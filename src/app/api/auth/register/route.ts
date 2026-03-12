@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server"
 import bcrypt from "bcryptjs"
+import { prisma } from "@/lib/prisma"
 import { z } from "zod"
 
 const registerSchema = z.object({
@@ -8,12 +9,16 @@ const registerSchema = z.object({
   password: z.string().min(8),
 })
 
-// DEMO MODE: Using in-memory storage since database is not available
-// In production, this should use a real database
-let usersStore: any[] = []
-
 export async function POST(request: NextRequest) {
   try {
+    // Check if DATABASE_URL is configured
+    if (!process.env.DATABASE_URL || process.env.DATABASE_URL.includes('localhost')) {
+      return NextResponse.json(
+        { error: "Baza podataka nije konfigurirana. Postavi DATABASE_URL u environment varijablama." },
+        { status: 503 }
+      )
+    }
+
     const body = await request.json()
     const parsed = registerSchema.safeParse(body)
 
@@ -27,7 +32,9 @@ export async function POST(request: NextRequest) {
     const { name, email, password } = parsed.data
 
     // Check if user already exists
-    const existingUser = usersStore.find(u => u.email === email)
+    const existingUser = await prisma.user.findUnique({
+      where: { email },
+    })
 
     if (existingUser) {
       return NextResponse.json(
@@ -39,36 +46,30 @@ export async function POST(request: NextRequest) {
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 12)
 
-    // Create user (in-memory for demo)
-    const user = {
-      id: `user_${Date.now()}`,
-      name,
-      email,
-      password: hashedPassword,
-      createdAt: new Date().toISOString(),
-      profile: {
-        displayName: name,
-        onboardingCompleted: false,
-      }
-    }
-
-    usersStore.push(user)
+    // Create user
+    const user = await prisma.user.create({
+      data: {
+        name,
+        email,
+        password: hashedPassword,
+        profile: {
+          create: {
+            displayName: name,
+            onboardingCompleted: false,
+          },
+        },
+      },
+    })
 
     return NextResponse.json(
-      { 
-        message: "Korisnik uspješno kreiran. (DEMO MODE - podaci se ne spremaju trajno)", 
-        userId: user.id 
-      },
+      { message: "Korisnik uspješno kreiran.", userId: user.id },
       { status: 201 }
     )
   } catch (error) {
     console.error("Registration error:", error)
     return NextResponse.json(
-      { error: "Došlo je do pogreške. Pokušaj ponovno." },
+      { error: "Došlo je do pogreške. Provjerite DATABASE_URL konfiguraciju." },
       { status: 500 }
     )
   }
 }
-
-// Export users store for use in other API routes
-export { usersStore }

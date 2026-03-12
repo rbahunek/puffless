@@ -12,6 +12,7 @@
     "db:migrate": "prisma migrate dev",
     "db:seed": "bun run prisma/seed.ts",
     "db:studio": "prisma studio",
+    "db:init": "bash scripts/init-db.sh",
     "postinstall": "prisma generate"
   },
   "prisma": {
