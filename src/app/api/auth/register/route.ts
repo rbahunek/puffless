@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server"
 import bcrypt from "bcryptjs"
-import { prisma } from "@/lib/prisma"
 import { z } from "zod"
 
 const registerSchema = z.object({
@@ -8,6 +7,10 @@ const registerSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8),
 })
+
+// DEMO MODE: Using in-memory storage since database is not available
+// In production, this should use a real database
+let usersStore: any[] = []
 
 export async function POST(request: NextRequest) {
   try {
@@ -24,9 +27,7 @@ export async function POST(request: NextRequest) {
     const { name, email, password } = parsed.data
 
     // Check if user already exists
-    const existingUser = await prisma.user.findUnique({
-      where: { email },
-    })
+    const existingUser = usersStore.find(u => u.email === email)
 
     if (existingUser) {
       return NextResponse.json(
@@ -38,23 +39,26 @@ export async function POST(request: NextRequest) {
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 12)
 
-    // Create user
-    const user = await prisma.user.create({
-      data: {
-        name,
-        email,
-        password: hashedPassword,
-        profile: {
-          create: {
-            displayName: name,
-            onboardingCompleted: false,
-          },
-        },
-      },
-    })
+    // Create user (in-memory for demo)
+    const user = {
+      id: `user_${Date.now()}`,
+      name,
+      email,
+      password: hashedPassword,
+      createdAt: new Date().toISOString(),
+      profile: {
+        displayName: name,
+        onboardingCompleted: false,
+      }
+    }
+
+    usersStore.push(user)
 
     return NextResponse.json(
-      { message: "Korisnik uspješno kreiran.", userId: user.id },
+      { 
+        message: "Korisnik uspješno kreiran. (DEMO MODE - podaci se ne spremaju trajno)", 
+        userId: user.id 
+      },
       { status: 201 }
     )
   } catch (error) {
@@ -65,3 +69,6 @@ export async function POST(request: NextRequest) {
     )
   }
 }
+
+// Export users store for use in other API routes
+export { usersStore }
