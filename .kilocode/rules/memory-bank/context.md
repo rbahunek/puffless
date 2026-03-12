@@ -41,6 +41,7 @@ Puffless is a complete Croatian-language quit smoking web application built as a
 - [x] **Mobile: Responsive header with logo on mobile**
 - [x] **Performance: Fixed pre-existing lint errors (Math.random, SidebarContent)**
 - [x] **PWA meta tags in root layout (apple-mobile-web-app-capable, etc.)**
+- [x] **Hydration fix: Memoized Button className to prevent SSR/client mismatches**
 
 ## Current Structure
 
@@ -105,3 +106,4 @@ Puffless is a complete Croatian-language quit smoking web application built as a
 | 2024-03 | Complete Puffless MVP built from scratch |
 | 2026-03 | PWA conversion: manifest, service worker, icons, bottom nav, FAB, mobile-first dashboard, install prompt, offline banner, safe area support |
 | 2026-03-12 | Committed and pushed all uncommitted changes (dashboard-client, layout, globals.css, page, card) despite typecheck errors |
+| 2026-03-12 | Fixed hydration mismatch error in Button component by memoizing className computation to ensure consistency between SSR and client |
