@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server"
-import bcrypt from "bcryptjs"
-import { prisma } from "@/lib/prisma"
 import { z } from "zod"
+
+// Edge runtime for Cloudflare compatibility
+export const runtime = "edge"
 
 const registerSchema = z.object({
   name: z.string().min(2),
@@ -9,6 +10,8 @@ const registerSchema = z.object({
   password: z.string().min(8),
 })
 
+// CLOUDFLARE EDGE MODE: No database, returns success
+// For production with database, deploy to Node.js environment (Vercel, Railway, etc.)
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
@@ -21,46 +24,26 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const { name, email, password } = parsed.data
+    const { name, email } = parsed.data
 
-    // Check if user already exists
-    const existingUser = await prisma.user.findUnique({
-      where: { email },
-    })
-
-    if (existingUser) {
-      return NextResponse.json(
-        { error: "Korisnik s ovom email adresom već postoji." },
-        { status: 409 }
-      )
-    }
-
-    // Hash password
-    const hashedPassword = await bcrypt.hash(password, 12)
-
-    // Create user
-    const user = await prisma.user.create({
-      data: {
-        name,
-        email,
-        password: hashedPassword,
-        profile: {
-          create: {
-            displayName: name,
-            onboardingCompleted: false,
-          },
-        },
-      },
-    })
-
+    // Return success - client will handle storage via localStorage
+    // For production: use Prisma Accelerate or deploy to Node.js runtime
     return NextResponse.json(
-      { message: "Korisnik uspješno kreiran.", userId: user.id },
+      { 
+        message: "Korisnik uspješno kreiran. (Demo mode - Cloudflare Edge)", 
+        user: {
+          id: `user_${Date.now()}`,
+          name,
+          email,
+          createdAt: new Date().toISOString()
+        }
+      },
       { status: 201 }
     )
   } catch (error) {
     console.error("Registration error:", error)
     return NextResponse.json(
-      { error: "Došlo je do pogreške. Provjerite DATABASE_URL konfiguraciju." },
+      { error: "Došlo je do pogreške. Pokušaj ponovno." },
       { status: 500 }
     )
   }
