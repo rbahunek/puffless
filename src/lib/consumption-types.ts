@@ -6,24 +6,25 @@ import { calculateMoneySaved as calculateMoneySavedSmoker } from "./utils"
  */
 
 export interface ConsumptionLabels {
-  // Nouns
-  itemSingular: string // "cigareta" / "korištenje"
-  itemPlural: string // "cigarete" / "korištenja"
-  itemGenitive: string // "cigareta" / "korištenja"
+  // Nouns - for actual consumption
+  itemSingular: string // "cigaretu" / "vape"
+  itemPlural: string // "cigarete" / "vape"
+  itemGenitive: string // "cigareta" / "vape"
   
   // Actions
   actionPresent: string // "pušiš" / "koristiš vape"
   actionPast: string // "popušio/la" / "koristio/la vape"
-  actionLog: string // "Zabilježi cigaretu" / "Zabilježi korištenje"
-  actionCraving: string // "Imam želju za cigaretom" / "Imam želju povući"
+  actionLog: string // "Zabilježi cigaretu" / "Zabilježi vape"
+  actionCraving: string // "Imam nikotinsku krizu" (universal)
   
-  // Stats
-  avoided: string // "Preskočene cigarete" / "Preskočena korištenja"
-  logged: string // "cigareta" / "korištenja"
+  // Stats - using "nikotinske krize" for avoided moments
+  avoided: string // "Preskočene nikotinske krize" (universal)
+  logged: string // "cigareta" / "vape"
+  loggedLabel: string // "Cigarete" / "Vape" for UI labels
   
   // Grace
-  grace: string // "grace cigarete" / "grace korištenja"
-  graceUsed: string // "grace cigareta iskorišteno" / "grace korištenja iskorišteno"
+  grace: string // "Grace nikotinske krize" (universal)
+  graceUsed: string // "grace iskorišteno"
   
   // User type
   userType: string // "Pušač/ica" / "Vaper/ica"
@@ -33,17 +34,18 @@ export interface ConsumptionLabels {
 export function getConsumptionLabels(type: ConsumptionType): ConsumptionLabels {
   if (type === "VAPING") {
     return {
-      itemSingular: "korištenje",
-      itemPlural: "korištenja",
-      itemGenitive: "korištenja",
+      itemSingular: "vape",
+      itemPlural: "vape",
+      itemGenitive: "vape",
       actionPresent: "koristiš vape",
       actionPast: "koristio/la vape",
-      actionLog: "Zabilježi korištenje",
-      actionCraving: "Imam želju povući",
-      avoided: "Preskočena korištenja",
-      logged: "korištenja",
-      grace: "grace korištenja",
-      graceUsed: "grace korištenja iskorišteno",
+      actionLog: "Zabilježi vape",
+      actionCraving: "Imam nikotinsku krizu", // Universal
+      avoided: "Preskočene nikotinske krize", // Universal
+      logged: "vape",
+      loggedLabel: "Vape",
+      grace: "Grace nikotinske krize", // Universal
+      graceUsed: "grace iskorišteno",
       userType: "Vaper/ica",
       activityType: "Vaping",
     }
@@ -51,17 +53,18 @@ export function getConsumptionLabels(type: ConsumptionType): ConsumptionLabels {
 
   // Default: SMOKING
   return {
-    itemSingular: "cigareta",
+    itemSingular: "cigaretu",
     itemPlural: "cigarete",
     itemGenitive: "cigareta",
     actionPresent: "pušiš",
     actionPast: "popušio/la",
     actionLog: "Zabilježi cigaretu",
-    actionCraving: "Imam želju za cigaretom",
-    avoided: "Preskočene cigarete",
+    actionCraving: "Imam nikotinsku krizu", // Universal
+    avoided: "Preskočene nikotinske krize", // Universal
     logged: "cigareta",
-    grace: "grace cigarete",
-    graceUsed: "grace cigareta iskorišteno",
+    loggedLabel: "Cigarete",
+    grace: "Grace nikotinske krize", // Universal
+    graceUsed: "grace iskorišteno",
     userType: "Pušač/ica",
     activityType: "Pušenje",
   }
@@ -144,15 +147,17 @@ export function formatUsageCount(count: number, type: ConsumptionType): string {
 }
 
 /**
- * Get neutral phrases for mixed contexts
+ * Get neutral phrases for mixed contexts (challenges, analytics)
  */
 export function getNeutralLabels() {
   return {
-    craving: "Imam želju",
-    logItem: "Zabilježi",
-    avoided: "Preskočeno",
-    grace: "dopuštena posrtanja",
+    craving: "Imam nikotinsku krizu",
+    cravings: "Nikotinske krize",
+    logItem: "Zabilježi cigaretu/vape",
+    avoided: "Preskočene nikotinske krize",
+    grace: "Grace nikotinske krize",
     challenge: "Nikotinski izazov",
+    consumption: "Cigarete/vape",
   }
 }
 

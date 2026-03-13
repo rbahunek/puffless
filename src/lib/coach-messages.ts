@@ -50,9 +50,9 @@ function getDashboardMessage(data: any): string {
   const messages = [
     `Svakim danom postaje lakše. Nastavi tako!`,
     `Tvoje tijelo već osjeća promjenu. Nastavi korak po korak.`,
-    `Svaki dan bez cigarete je pobjeda. Ponosni smo na tebe!`,
+    `Svaki dan bez nikotina je pobjeda. Ponosni smo na tebe!`,
     `Gradimo navike lagano, bez pritiska. Odlično napreduješ.`,
-    `Već si preskočio/la ${data.cigarettesAvoided || 0} cigareta. To je nevjerojatno!`,
+    `Već si preskočio/la ${data.cigarettesAvoided || 0} nikotinskih kriza. To je nevjerojatno!`,
   ]
 
   if (data.streakDays > 7) {
@@ -68,12 +68,12 @@ function getDashboardMessage(data: any): string {
 
 function getCravingMessage(data: any): string {
   const messages = [
-    `Želja prolazi za par minuta. Možeš izdržati.`,
-    `Odličan posao što si prepoznao/la želju. Probaj duboko disanje.`,
+    `Nikotinska kriza prolazi za par minuta. Možeš izdržati.`,
+    `Odličan posao što si prepoznao/la krizu. Probaj duboko disanje.`,
     `Ovo je privremeno. Tijelo se prilagođava novim navikama.`,
-    `Svaki put kad odbiješ cigaretu, moždane veze postaju jače.`,
-    `Popij čašu vode i čekaj 3 minute. Želja će oslabjeti.`,
-    `Prisjetit se zašto si počeo/la. Ta razlozi su i dalje tu.`,
+    `Svaki put kad prevladaš krizu, moždane veze postaju jače.`,
+    `Popij čašu vode i čekaj 3 minute. Kriza će oslabjeti.`,
+    `Prisjetit se zašto si počeo/la. Ti razlozi su i dalje tu.`,
   ]
 
   return messages[Math.floor(Math.random() * messages.length)]
@@ -140,7 +140,7 @@ function getStreakMessage(data: any): string {
   }
 
   if (data.streakDays < 14) {
-    return `${data.streakDays} dana bez cigareta! Tvoje tijelo već puno bolje diše.`
+    return `${data.streakDays} dana bez nikotina! Tvoje tijelo već puno bolje diše.`
   }
 
   return `Nevjerojatnih ${data.streakDays} dana! To je ozbiljan uspjeh.`
@@ -150,18 +150,18 @@ function getGraceMessage(data: any): string {
   const remaining = (data.graceLimit || 3) - (data.graceUsed || 0)
 
   if (data.graceUsed === 1) {
-    return `Jedna cigareta ne briše sav trud. Imaš još ${remaining} grace cigarete. Nastavi dalje!`
+    return `Jedno posrtanje ne briše sav trud. Imaš još ${remaining} grace. Nastavi dalje!`
   }
 
   if (remaining === 1) {
-    return `Pazi - ostala ti je samo 1 grace cigareta. Ali vjerujemo u tebe!`
+    return `Pazi - ostao ti je samo 1 grace. Ali vjerujemo u tebe!`
   }
 
   if (remaining === 0) {
-    return `Iskoristio/la si sve grace cigarete, ali to ne znači da si propao/la. Program je uzdrman, ali još uvijek možeš nastaviti. Fokusiraj se na sljedeći dan.`
+    return `Iskoristio/la si sve grace, ali to ne znači da si propao/la. Program je uzdrman, ali još uvijek možeš nastaviti. Fokusiraj se na sljedeći dan.`
   }
 
-  return `Iskoristio/la si ${data.graceUsed} od ${data.graceLimit} grace cigareta. To je okej - napredak je važniji od savršenstva.`
+  return `Iskoristio/la si ${data.graceUsed} od ${data.graceLimit} grace. To je okej - napredak je važniji od savršenstva.`
 }
 
 /**
@@ -180,10 +180,10 @@ export function getTimeSensitiveSuggestion(
   }
 
   const suggestions = [
-    "Obično imaš želju za cigaretom u ovo vrijeme. Probaj sada uzeti čašu vode.",
+    "Obično imaš nikotinsku krizu u ovo vrijeme. Probaj sada uzeti čašu vode.",
     "Uskoro dolazi tvoje rizično vrijeme. Pripremi se s dubokim disanjem.",
-    "U ovo doba dana obično imaš želju. Možda kratka šetnja?",
-    "Tvoji obrasci pokazuju da uskoro može doći želja. Budi spreman/na.",
+    "U ovo doba dana obično dobiješ krizu. Možda kratka šetnja?",
+    "Tvoji obrasci pokazuju da uskoro može doći nikotinska kriza. Budi spreman/na.",
   ]
 
   return suggestions[Math.floor(Math.random() * suggestions.length)]

@@ -45,6 +45,7 @@ interface DashboardClientProps {
     itemPlural: string
     avoided: string
     logged: string
+    loggedLabel: string
     grace: string
     actionLog: string
     actionCraving: string
