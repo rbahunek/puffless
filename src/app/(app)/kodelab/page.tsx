@@ -91,6 +91,7 @@ export default async function KodelabPage() {
       participants={participantsWithRatings}
       fantasyAllocations={fantasyAllocations}
       consumptionType={profile?.consumptionType || "SMOKING"}
+      isFantasyParticipant={userRegistration?.role === "FANTASY_PARTICIPANT"}
     />
   )
 }

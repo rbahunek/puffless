@@ -39,6 +39,7 @@ model User {
   fantasyRatingsGiven  FantasyRating[]       @relation("FantasyRater")
   fantasyRatingsReceived FantasyRating[]     @relation("FantasyRated")
   fantasyAllocations   FantasyAllocation[]
+  fantasyChatMessages  FantasyChatMessage[]
 }
 
 model Account {
@@ -422,4 +423,15 @@ model FantasyAllocation {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
+}
+
+model FantasyChatMessage {
+  id        String   @id @default(cuid())
+  userId    String
+  message   String   @db.Text
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([createdAt(sort: Desc)])
 }

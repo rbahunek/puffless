@@ -12,6 +12,7 @@ import { hr } from "date-fns/locale"
 import { KodelabSurveyModal } from "@/components/features/kodelab-survey-modal"
 import { FantasyRating } from "@/components/features/fantasy-rating"
 import { FantasyPortfolio } from "@/components/features/fantasy-portfolio"
+import { FantasyChat } from "@/components/features/fantasy-chat"
 
 interface KodelabClientProps {
   state: KodelabState
@@ -45,6 +46,7 @@ interface KodelabClientProps {
   }>
   fantasyAllocations: any[]
   consumptionType: string
+  isFantasyParticipant: boolean
 }
 
 export function KodelabClient({
@@ -55,6 +57,7 @@ export function KodelabClient({
   participants,
   fantasyAllocations,
   consumptionType,
+  isFantasyParticipant,
 }: KodelabClientProps) {
   const [activeTab, setActiveTab] = useState<"izazov" | "sudionici" | "fantasy" | "poredak">("izazov")
   const [showSurveyModal, setShowSurveyModal] = useState(false)
@@ -481,6 +484,9 @@ export function KodelabClient({
           }
         }}
       />
+
+      {/* Fantasy Chat */}
+      <FantasyChat isFantasyParticipant={isFantasyParticipant} />
     </div>
   )
 }
