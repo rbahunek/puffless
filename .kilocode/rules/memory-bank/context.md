@@ -147,3 +147,6 @@ Puffless is a complete Croatian-language nicotine cessation web application supp
 | 2026-03-13 | **MAJOR FEATURE**: Added smart AI coaching system with pattern detection, craving prediction, daily check-ins, Puffless Coach messages, trigger analytics page, and rescue toolkit |
 | 2026-03-13 | **MULTI-TYPE SUPPORT**: Added vaper support with non-breaking schema changes (ConsumptionType enum, usagePerDay, estimatedDailyCost) |
 | 2026-03-13 | **TERMINOLOGY REFACTOR**: Standardized UI to use "nikotinske krize" (universal) for cravings, "cigarete/vape" for consumption logging |
+| 2026-03-13 | **KODELAB IZAZOV**: Added special company challenge (01.04-30.04.2026) with dual roles, survey, coefficient system, Fantasy game, leaderboards |
+| 2026-03-13 | **FANTASY CHAT**: Real-time chat for Fantasy participants with emoji support, polling, mobile/desktop layouts |
+| 2026-03-13 | **COUNTDOWN TIMER**: Live countdown to challenge start (days, hours, min, sec) with gradient boxes |
