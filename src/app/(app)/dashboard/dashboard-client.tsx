@@ -20,9 +20,13 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { CravingModal } from "@/components/features/craving-modal"
 import { LogCigaretteModal } from "@/components/features/log-cigarette-modal"
+import { DailyCheckin } from "@/components/features/daily-checkin"
+import { CoachCard } from "@/components/features/coach-card"
+import { CravingAlert } from "@/components/features/craving-alert"
 import { formatCurrency, getMoneyEquivalent, getProgramName, getTriggerLabel } from "@/lib/utils"
 import { formatDistanceToNow } from "date-fns"
 import { hr } from "date-fns/locale"
+import { getTimeSensitiveSuggestion } from "@/lib/coach-messages"
 
 interface DashboardClientProps {
   user: { name?: string | null; email?: string | null }
@@ -85,6 +89,21 @@ interface DashboardClientProps {
     cravingsResolved: number
     taskCompleted: boolean
   } | null
+  smartFeatures: {
+    coachMessage: string
+    hasCheckedInToday: boolean
+    upcomingRisk: {
+      hour: number
+      riskScore: number
+      triggers: string[]
+    } | null
+    topInsight: {
+      type: string
+      title: string
+      description: string
+      confidence: number
+    } | null
+  }
 }
 
 const containerVariants: Variants = {
@@ -115,6 +134,7 @@ export function DashboardClient({
   dailyMotivation,
   recentLogs,
   todayProgress,
+  smartFeatures,
 }: DashboardClientProps) {
   const [showCravingModal, setShowCravingModal] = useState(false)
   const [showLogModal, setShowLogModal] = useState(false)
@@ -316,7 +336,73 @@ export function DashboardClient({
               </Card>
             </motion.div>
           )}
+        </div>
 
+        {/* Smart Features Section */}
+        
+        {/* Craving Prediction Alert */}
+        {smartFeatures.upcomingRisk && (
+          <motion.div variants={cardVariants}>
+            <CravingAlert
+              prediction={{
+                riskScore: smartFeatures.upcomingRisk.riskScore,
+                suggestion: getTimeSensitiveSuggestion(
+                  new Date().getHours(),
+                  [smartFeatures.upcomingRisk]
+                ) || "Obično imaš želju u ovo vrijeme. Budi spreman/na."
+              }}
+              onDismiss={() => {}}
+              onOpenCravingSupport={() => setShowCravingModal(true)}
+            />
+          </motion.div>
+        )}
+
+        {/* Puffless Coach */}
+        <motion.div variants={cardVariants}>
+          <CoachCard message={smartFeatures.coachMessage} />
+        </motion.div>
+
+        {/* Daily Check-in */}
+        {!smartFeatures.hasCheckedInToday && (
+          <motion.div variants={cardVariants}>
+            <DailyCheckin
+              hasCheckedInToday={smartFeatures.hasCheckedInToday}
+              onSubmit={async (mood, note) => {
+                await fetch("/api/mood", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ mood, note }),
+                })
+                window.location.reload()
+              }}
+            />
+          </motion.div>
+        )}
+
+        {/* Top Pattern Insight */}
+        {smartFeatures.topInsight && smartFeatures.topInsight.type !== "insufficient_data" && (
+          <motion.div variants={cardVariants}>
+            <Card className="border-blue-200 bg-gradient-to-br from-blue-50 to-indigo-50">
+              <CardContent className="pt-5">
+                <div className="flex items-start gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-blue-500 flex items-center justify-center flex-shrink-0">
+                    <TrendingUp className="w-5 h-5 text-white" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-blue-900 mb-1">
+                      {smartFeatures.topInsight.title}
+                    </h3>
+                    <p className="text-sm text-blue-800 leading-relaxed">
+                      {smartFeatures.topInsight.description}
+                    </p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        )}
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Health milestones */}
           <motion.div variants={cardVariants} className="col-span-2">
             <Card>

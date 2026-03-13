@@ -5,6 +5,8 @@ import { DashboardClient } from "./dashboard-client"
 import { calculateMoneySaved, getDaysSince, getMinutesSince } from "@/lib/utils"
 import { getAchievedMilestones, getNextMilestone } from "@/lib/health-milestones"
 import { getDailyMotivation } from "@/lib/program-data"
+import { generateCoachMessage } from "@/lib/coach-messages"
+import { predictRiskWindows, generateInsights } from "@/lib/pattern-detection"
 
 export default async function DashboardPage() {
   const session = await auth()
@@ -13,7 +15,7 @@ export default async function DashboardPage() {
   const userId = session.user.id
 
   // Fetch user data
-  const [profile, activeProgram, recentCigaretteLogs, recentCravingLogs, todayProgress] = await Promise.all([
+  const [profile, activeProgram, recentCigaretteLogs, recentCravingLogs, todayProgress, allCigaretteLogs, allCravingLogs, todayMoodCheckin] = await Promise.all([
     prisma.userProfile.findUnique({ where: { userId } }),
     prisma.program.findFirst({
       where: { userId, status: "ACTIVE" },
@@ -33,6 +35,24 @@ export default async function DashboardPage() {
       where: {
         userId,
         date: new Date(new Date().toISOString().split("T")[0]),
+      },
+    }),
+    prisma.cigaretteLog.findMany({
+      where: { userId },
+      orderBy: { loggedAt: "desc" },
+      take: 100,
+    }),
+    prisma.cravingLog.findMany({
+      where: { userId },
+      orderBy: { loggedAt: "desc" },
+      take: 100,
+    }),
+    prisma.moodCheckin.findFirst({
+      where: {
+        userId,
+        createdAt: {
+          gte: new Date(new Date().setHours(0, 0, 0, 0)),
+        },
       },
     }),
   ])
@@ -63,6 +83,21 @@ export default async function DashboardPage() {
         activeProgram.type === "TEN_DAY" ? 10 : activeProgram.type === "FOURTEEN_DAY" ? 14 : 30
       )
     : 0
+
+  // Generate smart features
+  const insights = generateInsights(allCigaretteLogs, allCravingLogs)
+  const riskWindows = predictRiskWindows(allCigaretteLogs, allCravingLogs)
+  const currentHour = new Date().getHours()
+  const upcomingRisk = riskWindows.find(w => w.hour === currentHour || w.hour === currentHour + 1)
+  
+  const coachMessage = generateCoachMessage({
+    context: "DASHBOARD",
+    userName: session.user.name || undefined,
+    streakDays: daysSinceQuit,
+    cigarettesAvoided: moneySaved.cigarettesAvoided,
+    graceUsed: activeProgram?.graceUsed,
+    graceLimit: activeProgram?.graceLimit,
+  })
 
   return (
     <DashboardClient
@@ -129,6 +164,16 @@ export default async function DashboardPage() {
         cravingsResolved: todayProgress.cravingsResolved,
         taskCompleted: todayProgress.taskCompleted,
       } : null}
+      smartFeatures={{
+        coachMessage,
+        hasCheckedInToday: !!todayMoodCheckin,
+        upcomingRisk: upcomingRisk ? {
+          hour: upcomingRisk.hour,
+          riskScore: upcomingRisk.riskScore,
+          triggers: upcomingRisk.triggers,
+        } : null,
+        topInsight: insights[0] || null,
+      }}
     />
   )
 }

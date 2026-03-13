@@ -14,6 +14,7 @@ import {
   LogOut,
   X,
   Cigarette,
+  TrendingUp,
 } from "lucide-react"
 import { cn } from "@/lib/utils"
 
@@ -21,6 +22,7 @@ const navItems = [
   { href: "/dashboard", label: "Nadzorna ploča", icon: LayoutDashboard },
   { href: "/program", label: "Program", icon: BookOpen },
   { href: "/izazov", label: "Izazov", icon: Trophy },
+  { href: "/obrasci", label: "Tvoji obrasci", icon: TrendingUp },
   { href: "/prijatelji", label: "Prijatelji", icon: Users },
   { href: "/povijest", label: "Povijest", icon: History },
   { href: "/profil", label: "Profil", icon: User },
