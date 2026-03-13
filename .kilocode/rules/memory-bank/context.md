@@ -62,6 +62,15 @@ Puffless is a complete Croatian-language nicotine cessation web application supp
 - [x] **Unified Challenge System: Smokers and vapers in same challenges**
 - [x] **Adaptive Onboarding: Consumption type selection + type-specific questions**
 
+### Kodelab Izazov + Puffless Fantasy (NEW!)
+- [x] **Special Company Challenge: Time-bound event (01.04-30.04.2026)**
+- [x] **Dual Role System: Active participants (Izazivači) + Fantasy participants**
+- [x] **Entry Survey: 7-question assessment for active participants**
+- [x] **Coefficient System: Self-score (60%) + crowd ratings (40%)**
+- [x] **Fantasy Game: 100 Puff bodova budget, 1-5 confidence ratings**
+- [x] **State Management: najava → prijave_otvorene → aktivno → završeno**
+- [x] **Leaderboard: Lowest consumption wins**
+
 ## Current Structure
 
 | File/Directory | Purpose | Status |
