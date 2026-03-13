@@ -584,6 +584,7 @@ export function DashboardClient({
         onClose={() => setShowLogModal(false)}
         graceUsed={program?.graceUsed ?? 0}
         graceLimit={program?.graceLimit ?? 0}
+        itemLabel={consumptionLabels.itemSingular}
       />
     </>
   )

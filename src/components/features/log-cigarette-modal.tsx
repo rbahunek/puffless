@@ -22,9 +22,10 @@ interface LogCigaretteModalProps {
   onClose: () => void
   graceUsed?: number
   graceLimit?: number
+  itemLabel?: string // "cigaretu" or "vape"
 }
 
-export function LogCigaretteModal({ open, onClose, graceUsed = 0, graceLimit = 3 }: LogCigaretteModalProps) {
+export function LogCigaretteModal({ open, onClose, graceUsed = 0, graceLimit = 3, itemLabel = "cigaretu" }: LogCigaretteModalProps) {
   const router = useRouter()
   const [selectedTrigger, setSelectedTrigger] = useState<string | null>(null)
   const [note, setNote] = useState("")
@@ -107,10 +108,10 @@ export function LogCigaretteModal({ open, onClose, graceUsed = 0, graceLimit = 3
                 >
                   <div className="mb-6">
                     <h2 className="text-xl font-bold text-[#1F2937] mb-2" style={{ fontFamily: "Poppins, sans-serif" }}>
-                      Zabilježi cigaretu
+                      Zabilježi {itemLabel}
                     </h2>
                     <p className="text-sm text-[#6B7280]">
-                      Jedna cigareta ne briše sav trud. Nastavi dalje.
+                      Jedno posrtanje ne briše sav trud. Nastavi dalje.
                     </p>
                   </div>
 
@@ -199,7 +200,7 @@ export function LogCigaretteModal({ open, onClose, graceUsed = 0, graceLimit = 3
                     variant="warning"
                     className="w-full"
                   >
-                    Zabilježi cigaretu
+                    Zabilježi {itemLabel}
                   </Button>
                 </motion.div>
               ) : (
