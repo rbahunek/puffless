@@ -44,7 +44,7 @@ export function getConsumptionLabels(type: ConsumptionType): ConsumptionLabels {
       avoided: "Preskočene nikotinske krize", // Universal
       logged: "vape",
       loggedLabel: "Vape",
-      grace: "Grace nikotinske krize", // Universal
+      grace: "Grace vape", // Dynamic for vapers
       graceUsed: "grace iskorišteno",
       userType: "Vaper/ica",
       activityType: "Vaping",
@@ -63,7 +63,7 @@ export function getConsumptionLabels(type: ConsumptionType): ConsumptionLabels {
     avoided: "Preskočene nikotinske krize", // Universal
     logged: "cigareta",
     loggedLabel: "Cigarete",
-    grace: "Grace nikotinske krize", // Universal
+    grace: "Grace cigarete", // Dynamic for smokers
     graceUsed: "grace iskorišteno",
     userType: "Pušač/ica",
     activityType: "Pušenje",
