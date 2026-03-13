@@ -9,6 +9,9 @@ import { KodelabState } from "@/lib/kodelab"
 import { getKodelabStateLabel } from "@/lib/kodelab"
 import { format } from "date-fns"
 import { hr } from "date-fns/locale"
+import { KodelabSurveyModal } from "@/components/features/kodelab-survey-modal"
+import { FantasyRating } from "@/components/features/fantasy-rating"
+import { FantasyPortfolio } from "@/components/features/fantasy-portfolio"
 
 interface KodelabClientProps {
   state: KodelabState
@@ -54,6 +57,8 @@ export function KodelabClient({
   consumptionType,
 }: KodelabClientProps) {
   const [activeTab, setActiveTab] = useState<"izazov" | "sudionici" | "fantasy" | "poredak">("izazov")
+  const [showSurveyModal, setShowSurveyModal] = useState(false)
+  const [showFantasyView, setShowFantasyView] = useState<"rating" | "portfolio" | null>(null)
 
   const tabs = [
     { id: "izazov" as const, label: "Izazov", icon: Trophy },
@@ -104,10 +109,30 @@ export function KodelabClient({
 
           {!userRegistration && canRegister && (
             <div className="space-y-2">
-              <Button className="w-full" size="lg">
+              <Button 
+                onClick={() => setShowSurveyModal(true)}
+                className="w-full" 
+                size="lg"
+              >
                 Prijavi se kao Izazivač
               </Button>
-              <Button variant="secondary" className="w-full" size="lg">
+              <Button 
+                onClick={async () => {
+                  try {
+                    await fetch("/api/kodelab/register", {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({ role: "FANTASY_PARTICIPANT" }),
+                    })
+                    window.location.reload()
+                  } catch (error) {
+                    console.error("Fantasy registration failed:", error)
+                  }
+                }}
+                variant="secondary" 
+                className="w-full" 
+                size="lg"
+              >
                 Pridruži se Fantasy igri
               </Button>
             </div>
@@ -271,17 +296,117 @@ export function KodelabClient({
           </Card>
 
           {userRegistration?.role === "FANTASY_PARTICIPANT" ? (
-            <div>
-              <p className="text-sm text-slate-600 mb-3">Ocijeni sudionike (1-5):</p>
-              {/* Fantasy rating list will go here */}
-              <p className="text-center text-slate-500 py-8">Fantasy UI u izradi...</p>
+            <div className="space-y-4">
+              {!showFantasyView && (
+                <div className="flex gap-3">
+                  <Button 
+                    onClick={() => setShowFantasyView("rating")}
+                    className="flex-1"
+                  >
+                    Ocijeni sudionike
+                  </Button>
+                  <Button 
+                    onClick={() => setShowFantasyView("portfolio")}
+                    variant="secondary"
+                    className="flex-1"
+                  >
+                    Raspodjela bodova
+                  </Button>
+                </div>
+              )}
+
+              {showFantasyView === "rating" && (
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between mb-2">
+                    <p className="text-sm font-semibold text-slate-700">
+                      Ocijeni sudionike (1-5):
+                    </p>
+                    <Button 
+                      variant="ghost" 
+                      size="sm"
+                      onClick={() => setShowFantasyView(null)}
+                    >
+                      Zatvori
+                    </Button>
+                  </div>
+                  {participants.map((p) => (
+                    <FantasyRating
+                      key={p.id}
+                      participant={{
+                        id: p.id,
+                        name: p.user.name || "Anonim",
+                        coefficient: p.coefficient || 2.0,
+                        userRating: p.userRating,
+                      }}
+                      onRate={async (regId, confidence) => {
+                        await fetch("/api/kodelab/fantasy/rate", {
+                          method: "POST",
+                          headers: { "Content-Type": "application/json" },
+                          body: JSON.stringify({ registrationId: regId, confidence }),
+                        })
+                        window.location.reload()
+                      }}
+                    />
+                  ))}
+                </div>
+              )}
+
+              {showFantasyView === "portfolio" && (
+                <div>
+                  <div className="flex items-center justify-between mb-4">
+                    <p className="text-sm font-semibold text-slate-700">
+                      Raspodjela Puff bodova:
+                    </p>
+                    <Button 
+                      variant="ghost" 
+                      size="sm"
+                      onClick={() => setShowFantasyView(null)}
+                    >
+                      Zatvori
+                    </Button>
+                  </div>
+                  <FantasyPortfolio
+                    participants={participants.map(p => ({
+                      id: p.id,
+                      name: p.user.name || "Anonim",
+                      coefficient: p.coefficient || 2.0,
+                    }))}
+                    budget={config.fantasyBudget}
+                    existingAllocations={fantasyAllocations}
+                    onAllocate={async (alloc) => {
+                      await fetch("/api/kodelab/fantasy/allocate", {
+                        method: "POST",
+                        headers: { "Content-Type": "application/json" },
+                        body: JSON.stringify({ allocations: alloc }),
+                      })
+                      window.location.reload()
+                    }}
+                  />
+                </div>
+              )}
             </div>
           ) : (
             <Card>
               <CardContent className="py-12 text-center">
                 <p className="text-slate-600 mb-4">Samo Fantasy sudionici mogu ocjenjivati.</p>
                 {canRegister && (
-                  <Button variant="secondary">Pridruži se Fantasy igri</Button>
+                  <Button 
+                    onClick={async () => {
+                      try {
+                        await fetch("/api/kodelab/register", {
+                          method: "POST",
+                          headers: { "Content-Type": "application/json" },
+                          body: JSON.stringify({ role: "FANTASY_PARTICIPANT" }),
+                        })
+                        window.location.reload()
+                      } catch (error) {
+                        console.error("Fantasy registration failed:", error)
+                      }
+                    }}
+                    variant="secondary"
+                  >
+                    Pridruži se Fantasy igri
+                  </Button>
                 )}
               </CardContent>
             </Card>
@@ -335,6 +460,27 @@ export function KodelabClient({
           </CardContent>
         </Card>
       )}
+
+      {/* Survey Modal */}
+      <KodelabSurveyModal
+        open={showSurveyModal}
+        onClose={() => setShowSurveyModal(false)}
+        onSubmit={async (surveyData) => {
+          try {
+            await fetch("/api/kodelab/register", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                role: "ACTIVE_PARTICIPANT",
+                ...surveyData,
+              }),
+            })
+            window.location.reload()
+          } catch (error) {
+            console.error("Registration failed:", error)
+          }
+        }}
+      />
     </div>
   )
 }
