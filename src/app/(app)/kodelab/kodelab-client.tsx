@@ -13,6 +13,7 @@ import { KodelabSurveyModal } from "@/components/features/kodelab-survey-modal"
 import { FantasyRating } from "@/components/features/fantasy-rating"
 import { FantasyPortfolio } from "@/components/features/fantasy-portfolio"
 import { FantasyChat } from "@/components/features/fantasy-chat"
+import { KodelabCountdown } from "@/components/features/kodelab-countdown"
 
 interface KodelabClientProps {
   state: KodelabState
