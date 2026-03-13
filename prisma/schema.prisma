@@ -35,6 +35,10 @@ model User {
   patternInsights      PatternInsight[]
   cravingPredictions   CravingPrediction[]
   coachMessages        CoachMessage[]
+  kodelabRegistrations KodelabRegistration[]
+  fantasyRatingsGiven  FantasyRating[]       @relation("FantasyRater")
+  fantasyRatingsReceived FantasyRating[]     @relation("FantasyRated")
+  fantasyAllocations   FantasyAllocation[]
 }
 
 model Account {
@@ -340,4 +344,82 @@ model CoachMessage {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId, isDisplayed, context])
+}
+
+// Kodelab Challenge - Special Company Event
+
+enum KodelabRole {
+  ACTIVE_PARTICIPANT // Izazivač - actually quitting
+  FANTASY_PARTICIPANT // Fantasy sudionik - predicting only
+}
+
+enum KodelabStrategy {
+  FULL_QUIT // Idem na potpuno bez nikotina
+  MAJOR_REDUCTION // Ciljam na veliko smanjenje
+  TRYING // Još nisam siguran/na, ali želim pokušati
+}
+
+model KodelabRegistration {
+  id             String          @id @default(cuid())
+  userId         String
+  role           KodelabRole
+  
+  // Survey responses (for active participants only)
+  motivation     Int?            // 1-10
+  difficulty     Int?            // 1-10
+  previousAttempts String?       // "never", "1-2", "many"
+  hasSupport     String?         // "yes", "partial", "no"
+  biggestTrigger String?         // TriggerType
+  successBelief  Int?            // 1-10
+  strategy       KodelabStrategy?
+  
+  // Calculated scores
+  selfScore      Float?          // 0-100 from survey
+  crowdScore     Float?          // 1-5 average from fantasy ratings
+  probability    Float?          // 0-1 final probability
+  coefficient    Float?          // odds = 1 / probability
+  
+  // Challenge participation
+  totalConsumption Int           @default(0) // cigarettes/vape logged during challenge
+  graceUsed      Int             @default(0)
+  isActive       Boolean         @default(true)
+  completedChallenge Boolean     @default(false)
+  
+  registeredAt   DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  fantasyRatingsReceived FantasyRating[] @relation("KodelabParticipantRated")
+
+  @@unique([userId])
+}
+
+model FantasyRating {
+  id               String              @id @default(cuid())
+  raterId          String              // Fantasy participant giving rating
+  participantId    String              // Active participant being rated
+  registrationId   String              // KodelabRegistration ID
+  confidence       Int                 // 1-5 scale
+  createdAt        DateTime            @default(now())
+  updatedAt        DateTime            @updatedAt
+
+  rater        User                @relation("FantasyRater", fields: [raterId], references: [id], onDelete: Cascade)
+  participant  User                @relation("FantasyRated", fields: [participantId], references: [id], onDelete: Cascade)
+  registration KodelabRegistration @relation("KodelabParticipantRated", fields: [registrationId], references: [id], onDelete: Cascade)
+
+  @@unique([raterId, registrationId])
+}
+
+model FantasyAllocation {
+  id               String   @id @default(cuid())
+  userId           String   // Fantasy participant
+  registrationId   String   // Active participant they're betting on
+  pointsAllocated  Int      // Amount of Puff bodova allocated
+  coefficient      Float    // Coefficient at time of allocation
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
