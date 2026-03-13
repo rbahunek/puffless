@@ -136,3 +136,5 @@ Puffless is a complete Croatian-language nicotine cessation web application supp
 | 2026-03-12 | FINAL SOLUTION: Bypassed Prisma entirely for Cloudflare Edge - using direct SQL over HTTP to Neon database |
 | 2026-03-13 | Prepared for Vercel deployment - restored NextAuth + Prisma (Vercel supports Node.js runtime) |
 | 2026-03-13 | **MAJOR FEATURE**: Added smart AI coaching system with pattern detection, craving prediction, daily check-ins, Puffless Coach messages, trigger analytics page, and rescue toolkit |
+| 2026-03-13 | **MULTI-TYPE SUPPORT**: Added vaper support with non-breaking schema changes (ConsumptionType enum, usagePerDay, estimatedDailyCost) |
+| 2026-03-13 | **TERMINOLOGY REFACTOR**: Standardized UI to use "nikotinske krize" (universal) for cravings, "cigarete/vape" for consumption logging |
