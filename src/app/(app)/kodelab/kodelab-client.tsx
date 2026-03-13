@@ -80,6 +80,14 @@ export function KodelabClient({
 
   return (
     <div className="space-y-6 pb-safe-bottom">
+      {/* Countdown Timer - Only show before challenge starts */}
+      {(state === "najava" || state === "prijave_otvorene") && (
+        <KodelabCountdown
+          targetDate={config.startDate}
+          title="Izazov počinje za:"
+        />
+      )}
+
       {/* Hero Card */}
       <Card className="border-t-4 border-t-teal-500 bg-gradient-to-br from-teal-50 to-blue-50">
         <CardContent className="pt-6">
