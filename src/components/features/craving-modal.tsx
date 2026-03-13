@@ -157,13 +157,13 @@ export function CravingModal({ open, onClose }: CravingModalProps) {
                   <div className="text-center mb-8">
                     <div className="inline-flex items-center gap-2 bg-[#fff4ed] text-[#FF8C42] rounded-full px-4 py-2 text-sm font-semibold mb-4">
                       <Wind className="w-4 h-4" />
-                      Podrška pri žudnji
+                      Nikotinska kriza
                     </div>
                     <h2 className="text-2xl font-bold text-[#1F2937] mb-2" style={{ fontFamily: "Poppins, sans-serif" }}>
-                      Žudnja prolazi. 💙
+                      Kriza prolazi. 💙
                     </h2>
                     <p className="text-[#6B7280] text-sm">
-                      Pričekaj 3 minute. Žudnja često prođe sama od sebe.
+                      Pričekaj 3 minute. Nikotinska kriza često prođe sama od sebe.
                     </p>
                   </div>
 

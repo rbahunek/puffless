@@ -47,6 +47,11 @@ interface HistoryClientProps {
   cravingLogs: CravingLog[]
   dailyProgress: DailyProgress[]
   analytics: Analytics
+  consumptionLabels: {
+    itemSingular: string
+    itemPlural: string
+    loggedLabel: string
+  }
 }
 
 type Tab = "pregled" | "cigarete" | "zudnje"
@@ -61,7 +66,7 @@ const itemVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.3 } },
 }
 
-export function HistoryClient({ cigaretteLogs, cravingLogs, dailyProgress, analytics }: HistoryClientProps) {
+export function HistoryClient({ cigaretteLogs, cravingLogs, dailyProgress, analytics, consumptionLabels }: HistoryClientProps) {
   const [activeTab, setActiveTab] = useState<Tab>("pregled")
 
   const formatHour = (hour: number) => {
@@ -298,7 +303,7 @@ export function HistoryClient({ cigaretteLogs, cravingLogs, dailyProgress, analy
               {cigaretteLogs.length === 0 ? (
                 <div className="text-center py-8">
                   <div className="text-4xl mb-3">🎉</div>
-                  <p className="text-[#6B7280] text-sm">Nema zabilježenih cigareta!</p>
+                  <p className="text-[#6B7280] text-sm">Nema zabilježenih {consumptionLabels.itemPlural}!</p>
                   <p className="text-xs text-[#9CA3AF] mt-1">Odlično radiš!</p>
                 </div>
               ) : (

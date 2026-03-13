@@ -31,6 +31,10 @@ model User {
   sentInvites          InviteCode[]   @relation("InviteSender")
   receivedInvites      InviteCode[]   @relation("InviteReceiver")
   achievements         UserAchievement[]
+  moodCheckins         MoodCheckin[]
+  patternInsights      PatternInsight[]
+  cravingPredictions   CravingPrediction[]
+  coachMessages        CoachMessage[]
 }
 
 model Account {
@@ -68,18 +72,28 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
+enum ConsumptionType {
+  SMOKING
+  VAPING
+}
+
 model UserProfile {
-  id                  String   @id @default(cuid())
-  userId              String   @unique
+  id                  String          @id @default(cuid())
+  userId              String          @unique
   displayName         String?
-  cigarettesPerDay    Int      @default(20)
-  cigarettesPerPack   Int      @default(20)
-  pricePerPack        Float    @default(4.0)
-  quitDate            DateTime @default(now())
-  onboardingCompleted Boolean  @default(false)
-  triggers            String[] @default([])
-  createdAt           DateTime @default(now())
-  updatedAt           DateTime @updatedAt
+  // Smoking fields (backward compatible - keep defaults)
+  cigarettesPerDay    Int             @default(20)
+  cigarettesPerPack   Int             @default(20)
+  pricePerPack        Float           @default(4.0)
+  // New: Support for both smokers and vapers
+  consumptionType     ConsumptionType @default(SMOKING)
+  usagePerDay         Int?            // For vapers: # of vape sessions/puffs per day
+  estimatedDailyCost  Float?          // For vapers: direct daily cost estimation
+  quitDate            DateTime        @default(now())
+  onboardingCompleted Boolean         @default(false)
+  triggers            String[]        @default([])
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @updatedAt
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
@@ -190,6 +204,9 @@ model DailyProgress {
   taskCompleted    Boolean  @default(false)
   reflectionNote   String?
   moodScore        Int?
+  dailyMood        MoodType?
+  supportActionsUsed String[] @default([])
+  coachInteractions Int      @default(0)
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
 
@@ -244,4 +261,83 @@ model HealthMilestoneProgress {
   createdAt    DateTime @default(now())
 
   @@unique([userId, milestoneKey])
+}
+
+// Smart Features - Behavioral Analysis & AI Coaching
+
+enum MoodType {
+  EXCELLENT
+  GOOD
+  DIFFICULT
+  STRONG_CRAVING
+}
+
+model MoodCheckin {
+  id        String   @id @default(cuid())
+  userId    String
+  mood      MoodType
+  note      String?
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt])
+}
+
+model PatternInsight {
+  id          String   @id @default(cuid())
+  userId      String
+  type        String   // "time_of_day", "trigger_frequency", "weekly_pattern", etc.
+  title       String   // "Najviše želja javlja se između 8:00 i 10:00"
+  description String?
+  data        String   // JSON with pattern data
+  confidence  Float    @default(0.0) // 0.0 to 1.0
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, type])
+  @@index([userId, isActive])
+}
+
+model CravingPrediction {
+  id              String   @id @default(cuid())
+  userId          String
+  predictedTime   DateTime // When craving is predicted
+  riskScore       Float    // 0.0 to 1.0
+  basedOnTriggers String[] // ["COFFEE", "STRESS"]
+  basedOnTimes    String[] // ["09:00", "14:30"]
+  suggestion      String?  // "Probaj sada uzeti čašu vode..."
+  wasAccurate     Boolean? // Track if prediction was correct
+  createdAt       DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, predictedTime])
+}
+
+enum CoachMessageContext {
+  DASHBOARD
+  CRAVING_MODAL
+  END_OF_DAY
+  MILESTONE
+  DIFFICULT_MOMENT
+  STREAK
+  GRACE_USED
+}
+
+model CoachMessage {
+  id          String              @id @default(cuid())
+  userId      String
+  context     CoachMessageContext
+  message     String
+  isDisplayed Boolean             @default(false)
+  displayedAt DateTime?
+  createdAt   DateTime            @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, isDisplayed, context])
 }

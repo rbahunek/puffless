@@ -1,10 +1,10 @@
-# Active Context: Puffless — Quit Smoking App
+# Active Context: Puffless — Nikotinski Izazov
 
 ## Current State
 
-**App Status**: ✅ Complete MVP — Production-ready full-stack PWA application
+**App Status**: ✅ Complete MVP + AI Coach + Multi-Type — Production-ready full-stack PWA application
 
-Puffless is a complete Croatian-language quit smoking web application built as a startup MVP, now enhanced as a mobile-first Progressive Web App (PWA).
+Puffless is a complete Croatian-language nicotine cessation web application supporting both **smokers (pušači) and vapers (vaperi)**, built as a startup MVP, enhanced as a mobile-first PWA with AI-style behavioral coaching and pattern detection.
 
 ## Recently Completed
 
@@ -44,6 +44,24 @@ Puffless is a complete Croatian-language quit smoking web application built as a
 - [x] **Hydration fix: Replaced twMerge with clsx in Button component (root cause fix)**
 - [x] **UI Enhancement: Improved landing page with gradients, shadows, and animations**
 
+### Smart AI Coaching Features (NEW!)
+- [x] **Pattern Detection: Analyzes time-of-day, triggers, weekly patterns**
+- [x] **Puffless Coach: Context-aware supportive AI messages**
+- [x] **Daily Check-in: Mood tracking with support suggestions**
+- [x] **Craving Prediction: Proactive alerts for high-risk windows**
+- [x] **Trigger Analytics Page: Visual pattern analysis and insights**
+- [x] **Rescue Toolkit: 5 craving support tools (breathing, timer, water, walk, motivation)**
+- [x] **Smart Insights: Personalized behavioral analysis with confidence scores**
+- [x] **End-of-Day Summary: Daily recap with coach message**
+
+### Multi-Type Support (NEW!)
+- [x] **Vaper Support: Full support for vaping users alongside smokers**
+- [x] **ConsumptionType System: SMOKING / VAPING with backward compatibility**
+- [x] **Type-Aware Labels: Dynamic UI text based on user type**
+- [x] **Separate Calculations: Vaper money logic (daily cost) vs smoker logic (pack-based)**
+- [x] **Unified Challenge System: Smokers and vapers in same challenges**
+- [x] **Adaptive Onboarding: Consumption type selection + type-specific questions**
+
 ## Current Structure
 
 | File/Directory | Purpose | Status |
@@ -58,7 +76,8 @@ Puffless is a complete Croatian-language quit smoking web application built as a
 | `src/app/(app)/prijatelji/` | Friends/invite | ✅ Complete |
 | `src/app/(app)/profil/` | Profile/settings | ✅ Complete |
 | `src/app/(app)/povijest/` | History/analytics | ✅ Complete |
-| `prisma/schema.prisma` | Database schema | ✅ Complete |
+| `src/app/(app)/obrasci/` | Pattern analytics | ✅ NEW - Smart features |
+| `prisma/schema.prisma` | Database schema | ✅ Complete + AI extensions |
 | `prisma/seed.ts` | Demo data | ✅ Complete |
 | `src/lib/auth.ts` | NextAuth config | ✅ Complete |
 | `src/components/features/` | Feature modals | ✅ Complete |
@@ -115,3 +134,7 @@ Puffless is a complete Croatian-language quit smoking web application built as a
 | 2026-03-12 | Reverted to Prisma + PostgreSQL (required for friends/challenges) with DATABASE_URL check and helpful error messages |
 | 2026-03-12 | Connected Neon PostgreSQL database, ran migrations, seeded demo data - database fully operational! |
 | 2026-03-12 | FINAL SOLUTION: Bypassed Prisma entirely for Cloudflare Edge - using direct SQL over HTTP to Neon database |
+| 2026-03-13 | Prepared for Vercel deployment - restored NextAuth + Prisma (Vercel supports Node.js runtime) |
+| 2026-03-13 | **MAJOR FEATURE**: Added smart AI coaching system with pattern detection, craving prediction, daily check-ins, Puffless Coach messages, trigger analytics page, and rescue toolkit |
+| 2026-03-13 | **MULTI-TYPE SUPPORT**: Added vaper support with non-breaking schema changes (ConsumptionType enum, usagePerDay, estimatedDailyCost) |
+| 2026-03-13 | **TERMINOLOGY REFACTOR**: Standardized UI to use "nikotinske krize" (universal) for cravings, "cigarete/vape" for consumption logging |

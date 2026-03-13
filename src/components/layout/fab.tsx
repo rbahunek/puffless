@@ -41,7 +41,7 @@ export function FloatingActionButton() {
           />
 
           <Wind className="w-5 h-5 relative z-10" />
-          <span className="relative z-10">Imam želju</span>
+          <span className="relative z-10">Imam krizu</span>
         </motion.button>
       </div>
 

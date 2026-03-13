@@ -2,6 +2,7 @@ import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { redirect } from "next/navigation"
 import { HistoryClient } from "./history-client"
+import { getConsumptionLabels } from "@/lib/consumption-types"
 
 export default async function PovijestPage() {
   const session = await auth()
@@ -58,8 +59,12 @@ export default async function PovijestPage() {
   const peakHour = Object.entries(hourCounts)
     .sort(([, a], [, b]) => b - a)[0]
 
+  const consumptionType = profile?.consumptionType || "SMOKING"
+  const consumptionLabels = getConsumptionLabels(consumptionType)
+
   return (
     <HistoryClient
+      consumptionLabels={consumptionLabels}
       cigaretteLogs={cigaretteLogs.map((l) => ({
         id: l.id,
         trigger: l.trigger,
