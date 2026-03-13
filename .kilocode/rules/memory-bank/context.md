@@ -1,10 +1,10 @@
-# Active Context: Puffless — Quit Smoking App
+# Active Context: Puffless — Nikotinski Izazov
 
 ## Current State
 
-**App Status**: ✅ Complete MVP — Production-ready full-stack PWA application
+**App Status**: ✅ Complete MVP + AI Coach + Multi-Type — Production-ready full-stack PWA application
 
-Puffless is a complete Croatian-language quit smoking web application built as a startup MVP, now enhanced as a mobile-first Progressive Web App (PWA).
+Puffless is a complete Croatian-language nicotine cessation web application supporting both **smokers (pušači) and vapers (vaperi)**, built as a startup MVP, enhanced as a mobile-first PWA with AI-style behavioral coaching and pattern detection.
 
 ## Recently Completed
 
@@ -53,6 +53,14 @@ Puffless is a complete Croatian-language quit smoking web application built as a
 - [x] **Rescue Toolkit: 5 craving support tools (breathing, timer, water, walk, motivation)**
 - [x] **Smart Insights: Personalized behavioral analysis with confidence scores**
 - [x] **End-of-Day Summary: Daily recap with coach message**
+
+### Multi-Type Support (NEW!)
+- [x] **Vaper Support: Full support for vaping users alongside smokers**
+- [x] **ConsumptionType System: SMOKING / VAPING with backward compatibility**
+- [x] **Type-Aware Labels: Dynamic UI text based on user type**
+- [x] **Separate Calculations: Vaper money logic (daily cost) vs smoker logic (pack-based)**
+- [x] **Unified Challenge System: Smokers and vapers in same challenges**
+- [x] **Adaptive Onboarding: Consumption type selection + type-specific questions**
 
 ## Current Structure
 
