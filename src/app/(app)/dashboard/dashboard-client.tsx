@@ -14,6 +14,7 @@ import {
   Clock,
   ChevronDown,
   ChevronUp,
+  Wind,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -37,6 +38,16 @@ interface DashboardClientProps {
     pricePerPack: number
     quitDate: string
     triggers: string[]
+    consumptionType: string
+  }
+  consumptionLabels: {
+    itemSingular: string
+    itemPlural: string
+    avoided: string
+    logged: string
+    grace: string
+    actionLog: string
+    actionCraving: string
   }
   program: {
     id: string
@@ -135,6 +146,7 @@ export function DashboardClient({
   recentLogs,
   todayProgress,
   smartFeatures,
+  consumptionLabels,
 }: DashboardClientProps) {
   const [showCravingModal, setShowCravingModal] = useState(false)
   const [showLogModal, setShowLogModal] = useState(false)
@@ -232,7 +244,7 @@ export function DashboardClient({
               className="h-14 text-sm font-medium"
             >
               <Zap className="w-5 h-5" />
-              Imam želju
+              {consumptionLabels.actionCraving}
             </Button>
             <Button
               onClick={() => setShowLogModal(true)}
@@ -240,8 +252,12 @@ export function DashboardClient({
               size="lg"
               className="h-14 text-sm font-medium"
             >
-              <Cigarette className="w-5 h-5" />
-              Zabilježi
+              {profile.consumptionType === "VAPING" ? (
+                <Wind className="w-5 h-5" />
+              ) : (
+                <Cigarette className="w-5 h-5" />
+              )}
+              {consumptionLabels.actionLog}
             </Button>
           </div>
         </motion.div>
@@ -278,7 +294,11 @@ export function DashboardClient({
                 <div className="flex items-center justify-between mb-3">
                   <div className="text-xs font-medium text-slate-500">Preskočeno</div>
                   <div className="w-8 h-8 bg-blue-50 rounded-lg flex items-center justify-center">
-                    <Cigarette className="w-4 h-4 text-blue-600" />
+                    {profile.consumptionType === "VAPING" ? (
+                      <Wind className="w-4 h-4 text-blue-600" />
+                    ) : (
+                      <Cigarette className="w-4 h-4 text-blue-600" />
+                    )}
                   </div>
                 </div>
                 <motion.div
@@ -288,7 +308,7 @@ export function DashboardClient({
                   {stats.cigarettesAvoided}
                 </motion.div>
                 <div className="text-xs text-slate-500">
-                  cigareta
+                  {consumptionLabels.logged}
                 </div>
               </CardContent>
             </Card>
@@ -300,7 +320,7 @@ export function DashboardClient({
               <Card>
                 <CardContent className="p-4">
                   <div className="flex items-center justify-between mb-3">
-                    <div className="text-sm font-medium text-slate-900">Grace cigarete</div>
+                    <div className="text-sm font-medium text-slate-900">{consumptionLabels.grace}</div>
                     <div className="text-xs text-slate-500">
                       {program.graceUsed}/{program.graceLimit}
                     </div>

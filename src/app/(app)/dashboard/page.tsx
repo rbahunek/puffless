@@ -2,11 +2,12 @@ import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
 import { redirect } from "next/navigation"
 import { DashboardClient } from "./dashboard-client"
-import { calculateMoneySaved, getDaysSince, getMinutesSince } from "@/lib/utils"
+import { getDaysSince, getMinutesSince } from "@/lib/utils"
 import { getAchievedMilestones, getNextMilestone } from "@/lib/health-milestones"
 import { getDailyMotivation } from "@/lib/program-data"
 import { generateCoachMessage } from "@/lib/coach-messages"
 import { predictRiskWindows, generateInsights } from "@/lib/pattern-detection"
+import { calculateMoneySavedUniversal, getConsumptionLabels } from "@/lib/consumption-types"
 
 export default async function DashboardPage() {
   const session = await auth()
@@ -66,10 +67,18 @@ export default async function DashboardPage() {
   const daysSinceQuit = getDaysSince(quitDate)
   const minutesSinceQuit = getMinutesSince(quitDate)
 
-  const moneySaved = calculateMoneySaved(
-    profile?.cigarettesPerDay || 20,
-    profile?.cigarettesPerPack || 20,
-    profile?.pricePerPack || 4.0,
+  const consumptionType = profile?.consumptionType || "SMOKING"
+  const consumptionLabels = getConsumptionLabels(consumptionType)
+  
+  const moneySaved = calculateMoneySavedUniversal(
+    consumptionType,
+    {
+      cigarettesPerDay: profile?.cigarettesPerDay,
+      cigarettesPerPack: profile?.cigarettesPerPack,
+      pricePerPack: profile?.pricePerPack,
+      usagePerDay: profile?.usagePerDay,
+      estimatedDailyCost: profile?.estimatedDailyCost,
+    },
     daysSinceQuit
   )
 
@@ -94,7 +103,7 @@ export default async function DashboardPage() {
     context: "DASHBOARD",
     userName: session.user.name || undefined,
     streakDays: daysSinceQuit,
-    cigarettesAvoided: moneySaved.cigarettesAvoided,
+    cigarettesAvoided: moneySaved.itemsAvoided,
     graceUsed: activeProgram?.graceUsed,
     graceLimit: activeProgram?.graceLimit,
   })
@@ -112,6 +121,7 @@ export default async function DashboardPage() {
         pricePerPack: profile?.pricePerPack || 4.0,
         quitDate: quitDate.toISOString(),
         triggers: profile?.triggers || [],
+        consumptionType,
       }}
       program={activeProgram ? {
         id: activeProgram.id,
@@ -127,10 +137,11 @@ export default async function DashboardPage() {
         daysSinceQuit,
         moneySaved: moneySaved.total,
         moneySavedDaily: moneySaved.daily,
-        cigarettesAvoided: moneySaved.cigarettesAvoided,
+        cigarettesAvoided: moneySaved.itemsAvoided,
         achievedMilestones: achievedMilestones.length,
         totalMilestones: 9,
       }}
+      consumptionLabels={consumptionLabels}
       nextMilestone={nextMilestone ? {
         title: nextMilestone.title,
         description: nextMilestone.description,

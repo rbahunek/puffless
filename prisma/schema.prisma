@@ -72,18 +72,28 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
+enum ConsumptionType {
+  SMOKING
+  VAPING
+}
+
 model UserProfile {
-  id                  String   @id @default(cuid())
-  userId              String   @unique
+  id                  String          @id @default(cuid())
+  userId              String          @unique
   displayName         String?
-  cigarettesPerDay    Int      @default(20)
-  cigarettesPerPack   Int      @default(20)
-  pricePerPack        Float    @default(4.0)
-  quitDate            DateTime @default(now())
-  onboardingCompleted Boolean  @default(false)
-  triggers            String[] @default([])
-  createdAt           DateTime @default(now())
-  updatedAt           DateTime @updatedAt
+  // Smoking fields (backward compatible - keep defaults)
+  cigarettesPerDay    Int             @default(20)
+  cigarettesPerPack   Int             @default(20)
+  pricePerPack        Float           @default(4.0)
+  // New: Support for both smokers and vapers
+  consumptionType     ConsumptionType @default(SMOKING)
+  usagePerDay         Int?            // For vapers: # of vape sessions/puffs per day
+  estimatedDailyCost  Float?          // For vapers: direct daily cost estimation
+  quitDate            DateTime        @default(now())
+  onboardingCompleted Boolean         @default(false)
+  triggers            String[]        @default([])
+  createdAt           DateTime        @default(now())
+  updatedAt           DateTime        @updatedAt
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

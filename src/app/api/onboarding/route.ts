@@ -12,10 +12,13 @@ export async function POST(request: NextRequest) {
 
     const body = await request.json()
     const {
+      consumptionType,
       displayName,
       cigarettesPerDay,
       cigarettesPerPack,
       pricePerPack,
+      usagePerDay,
+      estimatedDailyCost,
       quitDate,
       programType,
       isWithFriend,
@@ -24,24 +27,30 @@ export async function POST(request: NextRequest) {
 
     const userId = session.user.id
 
-    // Update user profile
+    // Update user profile with consumption type support
     await prisma.userProfile.upsert({
       where: { userId },
       update: {
+        consumptionType: consumptionType || "SMOKING",
         displayName: displayName || undefined,
         cigarettesPerDay: parseInt(cigarettesPerDay) || 20,
         cigarettesPerPack: parseInt(cigarettesPerPack) || 20,
         pricePerPack: parseFloat(pricePerPack) || 4.0,
+        usagePerDay: usagePerDay ? parseInt(usagePerDay) : null,
+        estimatedDailyCost: estimatedDailyCost ? parseFloat(estimatedDailyCost) : null,
         quitDate: new Date(quitDate),
         onboardingCompleted: true,
         triggers: triggers || [],
       },
       create: {
         userId,
+        consumptionType: consumptionType || "SMOKING",
         displayName: displayName || undefined,
         cigarettesPerDay: parseInt(cigarettesPerDay) || 20,
         cigarettesPerPack: parseInt(cigarettesPerPack) || 20,
         pricePerPack: parseFloat(pricePerPack) || 4.0,
+        usagePerDay: usagePerDay ? parseInt(usagePerDay) : null,
+        estimatedDailyCost: estimatedDailyCost ? parseFloat(estimatedDailyCost) : null,
         quitDate: new Date(quitDate),
         onboardingCompleted: true,
         triggers: triggers || [],

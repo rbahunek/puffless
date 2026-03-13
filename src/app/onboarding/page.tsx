@@ -3,9 +3,11 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
-import { ArrowRight, ArrowLeft, CheckCircle, Users, User } from "lucide-react"
+import { ArrowRight, ArrowLeft, CheckCircle, Users, User, Cigarette, Wind } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { getConsumptionLabels, getOnboardingQuestions } from "@/lib/consumption-types"
+import { ConsumptionType } from "@prisma/client"
 
 const TRIGGERS = [
   { key: "STRESS", label: "Stres", emoji: "😤" },
@@ -49,10 +51,13 @@ const PROGRAMS = [
 ]
 
 interface OnboardingData {
+  consumptionType: ConsumptionType
   displayName: string
   cigarettesPerDay: number
   cigarettesPerPack: number
   pricePerPack: number
+  usagePerDay: number // for vapers
+  estimatedDailyCost: number // for vapers
   quitDate: string
   programType: string
   isWithFriend: boolean
@@ -64,21 +69,28 @@ export default function OnboardingPage() {
   const [step, setStep] = useState(0)
   const [isLoading, setIsLoading] = useState(false)
   const [data, setData] = useState<OnboardingData>({
+    consumptionType: "SMOKING",
     displayName: "",
     cigarettesPerDay: 20,
     cigarettesPerPack: 20,
     pricePerPack: 4.0,
+    usagePerDay: 20, // for vapers
+    estimatedDailyCost: 5.0, // for vapers
     quitDate: new Date().toISOString().split("T")[0],
     programType: "TEN_DAY",
     isWithFriend: false,
     triggers: [],
   })
 
+  const consumptionLabels = getConsumptionLabels(data.consumptionType)
+  const onboardingQuestions = getOnboardingQuestions(data.consumptionType)
+
   const steps = [
-    { title: "Dobrodošao/la!", subtitle: "Recimo nam nešto o tebi" },
-    { title: "Tvoje pušačke navike", subtitle: "Ovo nam pomaže izračunati ušteđeni novac" },
+    { title: "Dobrodošao/la!", subtitle: "Što želiš pratiti?" },
+    { title: "Recimo nam nešto o tebi", subtitle: "Tvoje osnovne informacije" },
+    { title: "Tvoje navike", subtitle: "Ovo nam pomaže izračunati ušteđeni novac" },
     { title: "Odaberi program", subtitle: "Koji program ti odgovara?" },
-    { title: "Tvoji okidači", subtitle: "Što te najčešće potiče na pušenje?" },
+    { title: "Tvoji okidači", subtitle: `Što te najčešće potiče na ${consumptionLabels.activityType.toLowerCase()}?` },
     { title: "Samostalno ili s prijateljem?", subtitle: "Zajedno je lakše!" },
   ]
 
@@ -198,10 +210,50 @@ export default function OnboardingPage() {
                 <div className="space-y-6">
                   <div className="text-center py-4">
                     <div className="text-6xl mb-4">🌱</div>
-                    <p className="text-[#374151] leading-relaxed">
+                    <p className="text-[#374151] leading-relaxed mb-6">
                       Drago nam je što si ovdje. Puffless će ti pomoći pratiti napredak, uštedjeti novac i izgraditi zdravije navike — bez osjećaja krivnje.
                     </p>
                   </div>
+
+                  {/* Consumption type selection */}
+                  <div className="space-y-3">
+                    <label className="block text-sm font-medium text-[#374151] mb-2">
+                      Što želiš pratiti?
+                    </label>
+                    <div className="grid grid-cols-2 gap-3">
+                      <button
+                        onClick={() => setData({ ...data, consumptionType: "SMOKING" })}
+                        className={`
+                          p-5 rounded-xl border-2 transition-all
+                          ${data.consumptionType === "SMOKING"
+                            ? "border-teal-500 bg-teal-50"
+                            : "border-slate-200 bg-white hover:border-slate-300"
+                          }
+                        `}
+                      >
+                        <Cigarette className={`w-8 h-8 mx-auto mb-2 ${data.consumptionType === "SMOKING" ? "text-teal-600" : "text-slate-400"}`} />
+                        <p className={`font-semibold text-sm ${data.consumptionType === "SMOKING" ? "text-teal-900" : "text-slate-700"}`}>
+                          Pušenje
+                        </p>
+                      </button>
+                      <button
+                        onClick={() => setData({ ...data, consumptionType: "VAPING" })}
+                        className={`
+                          p-5 rounded-xl border-2 transition-all
+                          ${data.consumptionType === "VAPING"
+                            ? "border-blue-500 bg-blue-50"
+                            : "border-slate-200 bg-white hover:border-slate-300"
+                          }
+                        `}
+                      >
+                        <Wind className={`w-8 h-8 mx-auto mb-2 ${data.consumptionType === "VAPING" ? "text-blue-600" : "text-slate-400"}`} />
+                        <p className={`font-semibold text-sm ${data.consumptionType === "VAPING" ? "text-blue-900" : "text-slate-700"}`}>
+                          Vaping
+                        </p>
+                      </button>
+                    </div>
+                  </div>
+
                   <Input
                     label="Kako te možemo zvati?"
                     type="text"
@@ -215,49 +267,106 @@ export default function OnboardingPage() {
 
               {step === 1 && (
                 <div className="space-y-5">
-                  <div className="grid grid-cols-2 gap-4">
-                    <div>
-                      <label className="block text-sm font-medium text-[#374151] mb-1.5">
-                        Cigareta dnevno
-                      </label>
-                      <input
-                        type="number"
-                        min="1"
-                        max="100"
-                        value={data.cigarettesPerDay}
-                        onChange={(e) => setData({ ...data, cigarettesPerDay: parseInt(e.target.value) || 1 })}
-                        className="w-full h-11 rounded-xl border border-[#E5E7EB] px-4 text-sm focus:outline-none focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-sm font-medium text-[#374151] mb-1.5">
-                        Cigareta u kutiji
-                      </label>
-                      <input
-                        type="number"
-                        min="1"
-                        max="50"
-                        value={data.cigarettesPerPack}
-                        onChange={(e) => setData({ ...data, cigarettesPerPack: parseInt(e.target.value) || 1 })}
-                        className="w-full h-11 rounded-xl border border-[#E5E7EB] px-4 text-sm focus:outline-none focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent"
-                      />
-                    </div>
-                  </div>
+                  {data.consumptionType === "SMOKING" ? (
+                    <>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div>
+                          <label className="block text-sm font-medium text-[#374151] mb-1.5">
+                            Cigareta dnevno
+                          </label>
+                          <input
+                            type="number"
+                            min="1"
+                            max="100"
+                            value={data.cigarettesPerDay}
+                            onChange={(e) => setData({ ...data, cigarettesPerDay: parseInt(e.target.value) || 1 })}
+                            className="w-full h-11 rounded-xl border border-[#E5E7EB] px-4 text-sm focus:outline-none focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent"
+                          />
+                        </div>
+                        <div>
+                          <label className="block text-sm font-medium text-[#374151] mb-1.5">
+                            Cigareta u kutiji
+                          </label>
+                          <input
+                            type="number"
+                            min="1"
+                            max="50"
+                            value={data.cigarettesPerPack}
+                            onChange={(e) => setData({ ...data, cigarettesPerPack: parseInt(e.target.value) || 1 })}
+                            className="w-full h-11 rounded-xl border border-[#E5E7EB] px-4 text-sm focus:outline-none focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent"
+                          />
+                        </div>
+                      </div>
 
-                  <div>
-                    <label className="block text-sm font-medium text-[#374151] mb-1.5">
-                      Cijena kutije (€)
-                    </label>
-                    <input
-                      type="number"
-                      min="0.5"
-                      max="50"
-                      step="0.1"
-                      value={data.pricePerPack}
-                      onChange={(e) => setData({ ...data, pricePerPack: parseFloat(e.target.value) || 0.5 })}
-                      className="w-full h-11 rounded-xl border border-[#E5E7EB] px-4 text-sm focus:outline-none focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent"
-                    />
-                  </div>
+                      <div>
+                        <label className="block text-sm font-medium text-[#374151] mb-1.5">
+                          Cijena kutije (€)
+                        </label>
+                        <input
+                          type="number"
+                          min="0.5"
+                          max="50"
+                          step="0.1"
+                          value={data.pricePerPack}
+                          onChange={(e) => setData({ ...data, pricePerPack: parseFloat(e.target.value) || 0.5 })}
+                          className="w-full h-11 rounded-xl border border-[#E5E7EB] px-4 text-sm focus:outline-none focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent"
+                        />
+                      </div>
+
+                      {/* Preview for smokers */}
+                      <div className="bg-[#e8faf9] rounded-xl p-4">
+                        <p className="text-sm text-[#2EC4B6] font-medium">
+                          💰 Dnevno trošiš otprilike{" "}
+                          <strong>
+                            {((data.cigarettesPerDay / data.cigarettesPerPack) * data.pricePerPack).toFixed(2)} €
+                          </strong>{" "}
+                          na cigarete.
+                        </p>
+                      </div>
+                    </>
+                  ) : (
+                    <>
+                      {/* Vaping fields */}
+                      <div>
+                        <label className="block text-sm font-medium text-[#374151] mb-1.5">
+                          {onboardingQuestions.usageQuestion}
+                        </label>
+                        <input
+                          type="number"
+                          min="1"
+                          max="200"
+                          value={data.usagePerDay}
+                          onChange={(e) => setData({ ...data, usagePerDay: parseInt(e.target.value) || 1 })}
+                          className="w-full h-11 rounded-xl border border-[#E5E7EB] px-4 text-sm focus:outline-none focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent"
+                        />
+                        <p className="text-xs text-slate-500 mt-1">{onboardingQuestions.usageHint}</p>
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-medium text-[#374151] mb-1.5">
+                          {onboardingQuestions.costQuestion}
+                        </label>
+                        <input
+                          type="number"
+                          min="0.5"
+                          max="50"
+                          step="0.5"
+                          value={data.estimatedDailyCost}
+                          onChange={(e) => setData({ ...data, estimatedDailyCost: parseFloat(e.target.value) || 0.5 })}
+                          className="w-full h-11 rounded-xl border border-[#E5E7EB] px-4 text-sm focus:outline-none focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent"
+                        />
+                        <p className="text-xs text-slate-500 mt-1">{onboardingQuestions.costHint}</p>
+                      </div>
+
+                      {/* Preview for vapers */}
+                      <div className="bg-[#e8faf9] rounded-xl p-4">
+                        <p className="text-sm text-[#2EC4B6] font-medium">
+                          💰 Dnevno trošiš otprilike{" "}
+                          <strong>{data.estimatedDailyCost.toFixed(2)} €</strong> na vape.
+                        </p>
+                      </div>
+                    </>
+                  )}
 
                   <div>
                     <label className="block text-sm font-medium text-[#374151] mb-1.5">
@@ -269,17 +378,6 @@ export default function OnboardingPage() {
                       onChange={(e) => setData({ ...data, quitDate: e.target.value })}
                       className="w-full h-11 rounded-xl border border-[#E5E7EB] px-4 text-sm focus:outline-none focus:ring-2 focus:ring-[#2EC4B6] focus:border-transparent"
                     />
-                  </div>
-
-                  {/* Preview */}
-                  <div className="bg-[#e8faf9] rounded-xl p-4">
-                    <p className="text-sm text-[#2EC4B6] font-medium">
-                      💰 Dnevno trošiš otprilike{" "}
-                      <strong>
-                        {((data.cigarettesPerDay / data.cigarettesPerPack) * data.pricePerPack).toFixed(2)} €
-                      </strong>{" "}
-                      na cigarete.
-                    </p>
                   </div>
                 </div>
               )}
