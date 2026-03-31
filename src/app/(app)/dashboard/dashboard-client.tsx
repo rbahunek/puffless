@@ -15,7 +15,10 @@ import {
   ChevronDown,
   ChevronUp,
   Wind,
+  Star,
+  ArrowRight,
 } from "lucide-react"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
@@ -422,6 +425,33 @@ export function DashboardClient({
             </Card>
           </motion.div>
         )}
+
+        {/* Kodelab Izazov CTA */}
+        <motion.div variants={cardVariants}>
+          <Link href="/kodelab">
+            <Card className="border-2 border-amber-300 bg-gradient-to-br from-amber-50 via-orange-50 to-pink-50 hover:shadow-xl transition-all cursor-pointer group">
+              <CardContent className="pt-5">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-4">
+                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center">
+                      <Star className="w-7 h-7 text-white" />
+                    </div>
+                    <div>
+                      <h3 className="font-bold text-amber-900 text-lg mb-1">Kodelab izazov</h3>
+                      <p className="text-sm text-amber-700">
+                        01.04. - 30.04. • Prijave otvorene!
+                      </p>
+                      <p className="text-xs text-slate-600 mt-1">
+                        Izazivač ili Fantasy sudionik? Izaberi svoju ulogu! 🎮
+                      </p>
+                    </div>
+                  </div>
+                  <ArrowRight className="w-6 h-6 text-amber-600 group-hover:translate-x-1 transition-transform" />
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+        </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Health milestones */}
