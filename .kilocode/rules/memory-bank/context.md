@@ -62,6 +62,15 @@ Puffless is a complete Croatian-language nicotine cessation web application supp
 - [x] **Unified Challenge System: Smokers and vapers in same challenges**
 - [x] **Adaptive Onboarding: Consumption type selection + type-specific questions**
 
+### Kodelab Izazov + Puffless Fantasy (NEW!)
+- [x] **Special Company Challenge: Time-bound event (01.04-30.04.2026)**
+- [x] **Dual Role System: Active participants (Izazivači) + Fantasy participants**
+- [x] **Entry Survey: 7-question assessment for active participants**
+- [x] **Coefficient System: Self-score (60%) + crowd ratings (40%)**
+- [x] **Fantasy Game: 100 Puff bodova budget, 1-5 confidence ratings**
+- [x] **State Management: najava → prijave_otvorene → aktivno → završeno**
+- [x] **Leaderboard: Lowest consumption wins**
+
 ## Current Structure
 
 | File/Directory | Purpose | Status |
@@ -138,3 +147,6 @@ Puffless is a complete Croatian-language nicotine cessation web application supp
 | 2026-03-13 | **MAJOR FEATURE**: Added smart AI coaching system with pattern detection, craving prediction, daily check-ins, Puffless Coach messages, trigger analytics page, and rescue toolkit |
 | 2026-03-13 | **MULTI-TYPE SUPPORT**: Added vaper support with non-breaking schema changes (ConsumptionType enum, usagePerDay, estimatedDailyCost) |
 | 2026-03-13 | **TERMINOLOGY REFACTOR**: Standardized UI to use "nikotinske krize" (universal) for cravings, "cigarete/vape" for consumption logging |
+| 2026-03-13 | **KODELAB IZAZOV**: Added special company challenge (01.04-30.04.2026) with dual roles, survey, coefficient system, Fantasy game, leaderboards |
+| 2026-03-13 | **FANTASY CHAT**: Real-time chat for Fantasy participants with emoji support, polling, mobile/desktop layouts |
+| 2026-03-13 | **COUNTDOWN TIMER**: Live countdown to challenge start (days, hours, min, sec) with gradient boxes |
