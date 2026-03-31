@@ -44,10 +44,30 @@ export function getConsumptionLabels(type: ConsumptionType): ConsumptionLabels {
       avoided: "Preskočene nikotinske krize", // Universal
       logged: "vape",
       loggedLabel: "Vape",
-      grace: "Grace vape", // Dynamic for vapers
+      grace: "Grace vape",
       graceUsed: "grace iskorišteno",
       userType: "Vaper/ica",
       activityType: "Vaping",
+    }
+  }
+
+  if (type === "FANTASY_ONLY") {
+    // Fantasy-only users - minimal labels (won't track consumption)
+    return {
+      itemSingular: "stavku",
+      itemPlural: "stavke",
+      itemGenitive: "stavki",
+      actionPresent: "koristiš",
+      actionPast: "koristio/la",
+      actionLog: "Zabilježi",
+      actionCraving: "Imam nikotinsku krizu",
+      avoided: "Preskočene nikotinske krize",
+      logged: "stavki",
+      loggedLabel: "Stavke",
+      grace: "Grace",
+      graceUsed: "grace iskorišteno",
+      userType: "Fantasy sudionik",
+      activityType: "Fantasy",
     }
   }
 
@@ -63,7 +83,7 @@ export function getConsumptionLabels(type: ConsumptionType): ConsumptionLabels {
     avoided: "Preskočene nikotinske krize", // Universal
     logged: "cigareta",
     loggedLabel: "Cigarete",
-    grace: "Grace cigarete", // Dynamic for smokers
+    grace: "Grace cigarete",
     graceUsed: "grace iskorišteno",
     userType: "Pušač/ica",
     activityType: "Pušenje",

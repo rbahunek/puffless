@@ -80,6 +80,7 @@ model VerificationToken {
 enum ConsumptionType {
   SMOKING
   VAPING
+  FANTASY_ONLY // For users who only want to participate in Fantasy, not track consumption
 }
 
 model UserProfile {

@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { motion, AnimatePresence } from "framer-motion"
-import { ArrowRight, ArrowLeft, CheckCircle, Users, User, Cigarette, Wind } from "lucide-react"
+import { ArrowRight, ArrowLeft, CheckCircle, Users, User, Cigarette, Wind, Star } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { getConsumptionLabels, getOnboardingQuestions } from "@/lib/consumption-types"
@@ -97,7 +97,10 @@ export default function OnboardingPage() {
   const totalSteps = steps.length
 
   const handleNext = () => {
-    if (step < totalSteps - 1) {
+    // Skip usage questions (step 2) for FANTASY_ONLY users
+    if (step === 1 && data.consumptionType === "FANTASY_ONLY") {
+      setStep(3) // Jump to program selection
+    } else if (step < totalSteps - 1) {
       setStep(step + 1)
     } else {
       handleSubmit()
@@ -105,7 +108,12 @@ export default function OnboardingPage() {
   }
 
   const handleBack = () => {
-    if (step > 0) setStep(step - 1)
+    // Skip usage questions when going back for FANTASY_ONLY users
+    if (step === 3 && data.consumptionType === "FANTASY_ONLY") {
+      setStep(1) // Jump back to name step
+    } else if (step > 0) {
+      setStep(step - 1)
+    }
   }
 
   const toggleTrigger = (key: string) => {
@@ -220,38 +228,59 @@ export default function OnboardingPage() {
                     <label className="block text-sm font-medium text-[#374151] mb-2">
                       Što želiš pratiti?
                     </label>
-                    <div className="grid grid-cols-2 gap-3">
+                    <div className="grid grid-cols-3 gap-3">
                       <button
                         onClick={() => setData({ ...data, consumptionType: "SMOKING" })}
                         className={`
-                          p-5 rounded-xl border-2 transition-all
+                          p-4 rounded-xl border-2 transition-all
                           ${data.consumptionType === "SMOKING"
                             ? "border-teal-500 bg-teal-50"
                             : "border-slate-200 bg-white hover:border-slate-300"
                           }
                         `}
                       >
-                        <Cigarette className={`w-8 h-8 mx-auto mb-2 ${data.consumptionType === "SMOKING" ? "text-teal-600" : "text-slate-400"}`} />
-                        <p className={`font-semibold text-sm ${data.consumptionType === "SMOKING" ? "text-teal-900" : "text-slate-700"}`}>
+                        <Cigarette className={`w-7 h-7 mx-auto mb-2 ${data.consumptionType === "SMOKING" ? "text-teal-600" : "text-slate-400"}`} />
+                        <p className={`font-semibold text-xs ${data.consumptionType === "SMOKING" ? "text-teal-900" : "text-slate-700"}`}>
                           Pušenje
                         </p>
                       </button>
                       <button
                         onClick={() => setData({ ...data, consumptionType: "VAPING" })}
                         className={`
-                          p-5 rounded-xl border-2 transition-all
+                          p-4 rounded-xl border-2 transition-all
                           ${data.consumptionType === "VAPING"
                             ? "border-blue-500 bg-blue-50"
                             : "border-slate-200 bg-white hover:border-slate-300"
                           }
                         `}
                       >
-                        <Wind className={`w-8 h-8 mx-auto mb-2 ${data.consumptionType === "VAPING" ? "text-blue-600" : "text-slate-400"}`} />
-                        <p className={`font-semibold text-sm ${data.consumptionType === "VAPING" ? "text-blue-900" : "text-slate-700"}`}>
+                        <Wind className={`w-7 h-7 mx-auto mb-2 ${data.consumptionType === "VAPING" ? "text-blue-600" : "text-slate-400"}`} />
+                        <p className={`font-semibold text-xs ${data.consumptionType === "VAPING" ? "text-blue-900" : "text-slate-700"}`}>
                           Vaping
                         </p>
                       </button>
+                      <button
+                        onClick={() => setData({ ...data, consumptionType: "FANTASY_ONLY" })}
+                        className={`
+                          p-4 rounded-xl border-2 transition-all
+                          ${data.consumptionType === "FANTASY_ONLY"
+                            ? "border-amber-500 bg-amber-50"
+                            : "border-slate-200 bg-white hover:border-slate-300"
+                          }
+                        `}
+                      >
+                        <Star className={`w-7 h-7 mx-auto mb-2 ${data.consumptionType === "FANTASY_ONLY" ? "text-amber-600" : "text-slate-400"}`} />
+                        <p className={`font-semibold text-xs ${data.consumptionType === "FANTASY_ONLY" ? "text-amber-900" : "text-slate-700"}`}>
+                          Samo Fantasy
+                        </p>
+                      </button>
                     </div>
+                    <p className="text-xs text-slate-500 text-center">
+                      {data.consumptionType === "FANTASY_ONLY" 
+                        ? "Sudjeluješ samo u Fantasy igri, ne praćenje cigareta/vape"
+                        : "Praćenje nikotinske potrošnje + opcija za Fantasy"
+                      }
+                    </p>
                   </div>
 
                   <Input
