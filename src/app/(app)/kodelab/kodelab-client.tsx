@@ -12,7 +12,7 @@ import { hr } from "date-fns/locale"
 import { KodelabSurveyModal } from "@/components/features/kodelab-survey-modal"
 import { FantasyRating } from "@/components/features/fantasy-rating"
 import { FantasyPortfolio } from "@/components/features/fantasy-portfolio"
-import { FantasyChat } from "@/components/features/fantasy-chat"
+import { FantasyChatEmbedded } from "@/components/features/fantasy-chat-embedded"
 import { KodelabCountdown } from "@/components/features/kodelab-countdown"
 
 interface KodelabClientProps {
@@ -427,50 +427,56 @@ export function KodelabClient({
       )}
 
       {activeTab === "poredak" && (
-        <Card>
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Trophy className="w-5 h-5 text-amber-500" />
-              Ljestvica
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            {state === "najava" || state === "prijave_otvorene" ? (
-              <div className="text-center py-8">
-                <p className="text-slate-500">Ljestvica će biti dostupna nakon početka izazova.</p>
-              </div>
-            ) : (
-              <div className="space-y-2">
-                {participants
-                  .sort((a, b) => a.totalConsumption - b.totalConsumption)
-                  .map((p, i) => (
-                    <div
-                      key={p.id}
-                      className="flex items-center gap-3 p-3 bg-slate-50 rounded-xl"
-                    >
-                      <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm ${
-                        i === 0 ? "bg-amber-500 text-white" :
-                        i === 1 ? "bg-slate-300 text-slate-700" :
-                        i === 2 ? "bg-orange-300 text-orange-800" :
-                        "bg-slate-200 text-slate-600"
-                      }`}>
-                        {i + 1}
+        <div className="space-y-6">
+          {/* Leaderboard */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Trophy className="w-5 h-5 text-amber-500" />
+                Ljestvica
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              {state === "najava" || state === "prijave_otvorene" ? (
+                <div className="text-center py-8">
+                  <p className="text-slate-500">Ljestvica će biti dostupna nakon početka izazova.</p>
+                </div>
+              ) : (
+                <div className="space-y-2">
+                  {participants
+                    .sort((a, b) => a.totalConsumption - b.totalConsumption)
+                    .map((p, i) => (
+                      <div
+                        key={p.id}
+                        className="flex items-center gap-3 p-3 bg-slate-50 rounded-xl"
+                      >
+                        <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm ${
+                          i === 0 ? "bg-amber-500 text-white" :
+                          i === 1 ? "bg-slate-300 text-slate-700" :
+                          i === 2 ? "bg-orange-300 text-orange-800" :
+                          "bg-slate-200 text-slate-600"
+                        }`}>
+                          {i + 1}
+                        </div>
+                        <div className="flex-1">
+                          <p className="font-semibold text-slate-900 text-sm">
+                            {p.user.name || "Anonim"}
+                          </p>
+                        </div>
+                        <div className="text-right">
+                          <p className="text-lg font-bold text-slate-900">{p.totalConsumption}</p>
+                          <p className="text-xs text-slate-500">ukupno</p>
+                        </div>
                       </div>
-                      <div className="flex-1">
-                        <p className="font-semibold text-slate-900 text-sm">
-                          {p.user.name || "Anonim"}
-                        </p>
-                      </div>
-                      <div className="text-right">
-                        <p className="text-lg font-bold text-slate-900">{p.totalConsumption}</p>
-                        <p className="text-xs text-slate-500">ukupno</p>
-                      </div>
-                    </div>
-                  ))}
-              </div>
-            )}
-          </CardContent>
-        </Card>
+                    ))}
+                </div>
+              )}
+            </CardContent>
+          </Card>
+
+          {/* Fantasy Chat - Below Leaderboard */}
+          <FantasyChatEmbedded isFantasyParticipant={isFantasyParticipant} />
+        </div>
       )}
 
       {/* Survey Modal */}
@@ -494,8 +500,6 @@ export function KodelabClient({
         }}
       />
 
-      {/* Fantasy Chat */}
-      <FantasyChat isFantasyParticipant={isFantasyParticipant} />
     </div>
   )
 }
