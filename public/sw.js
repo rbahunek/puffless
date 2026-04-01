@@ -1,12 +1,14 @@
-// Puffless Service Worker
-const CACHE_NAME = 'puffless-v1';
-const STATIC_CACHE = 'puffless-static-v1';
-const DYNAMIC_CACHE = 'puffless-dynamic-v1';
+// Puffless Service Worker - Kodelab Izazov Edition
+const CACHE_NAME = 'puffless-v2-kodelab';
+const STATIC_CACHE = 'puffless-static-v2';
+const DYNAMIC_CACHE = 'puffless-dynamic-v2';
 
 // Assets to cache on install
 const STATIC_ASSETS = [
   '/',
   '/dashboard',
+  '/kodelab',
+  '/obrasci',
   '/manifest.json',
   '/icons/icon-192x192.png',
   '/icons/icon-512x512.png',

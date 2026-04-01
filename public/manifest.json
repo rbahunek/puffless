@@ -1,14 +1,14 @@
 {
-  "name": "Puffless — Prestani pušiti uz podršku",
+  "name": "Puffless — Kodelab Izazov 2026",
   "short_name": "Puffless",
-  "description": "Puffless ti pomaže pratiti ušteđeni novac, prepoznati okidače, izdržati žudnju i graditi navike bez osjećaja krivnje.",
-  "start_url": "/dashboard",
+  "description": "Nikotinski izazov s AI coachingom. Kodelab event 01-30.04.2026 — Izazivači, Fantasy liga i real-time chat!",
+  "start_url": "/kodelab",
   "display": "standalone",
   "orientation": "portrait",
-  "theme_color": "#2EC4B6",
-  "background_color": "#F7FAFC",
+  "theme_color": "#F59E0B",
+  "background_color": "#FFF7ED",
   "lang": "hr",
-  "categories": ["health", "lifestyle"],
+  "categories": ["health", "lifestyle", "social"],
   "icons": [
     {
       "src": "/icons/icon-72x72.png",
@@ -74,9 +74,16 @@
   ],
   "shortcuts": [
     {
-      "name": "Imam želju",
-      "short_name": "Žudnja",
-      "description": "Otvori podršku pri žudnji",
+      "name": "Kodelab izazov",
+      "short_name": "Kodelab",
+      "description": "Otvori Kodelab izazov i Fantasy ligu",
+      "url": "/kodelab",
+      "icons": [{ "src": "/icons/icon-96x96.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Imam nikotinsku krizu",
+      "short_name": "Kriza",
+      "description": "Otvori podršku pri nikotinskoj krizi",
       "url": "/dashboard?craving=true",
       "icons": [{ "src": "/icons/icon-96x96.png", "sizes": "96x96" }]
     },

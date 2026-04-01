@@ -6,7 +6,7 @@ import { motion } from "framer-motion"
 import {
   LayoutDashboard,
   BookOpen,
-  Trophy,
+  Star,
   History,
   User,
 } from "lucide-react"
@@ -15,7 +15,7 @@ import { cn } from "@/lib/utils"
 const navItems = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/program", label: "Program", icon: BookOpen },
-  { href: "/izazov", label: "Izazovi", icon: Trophy },
+  { href: "/kodelab", label: "Kodelab", icon: Star },
   { href: "/povijest", label: "Povijest", icon: History },
   { href: "/profil", label: "Profil", icon: User },
 ]
