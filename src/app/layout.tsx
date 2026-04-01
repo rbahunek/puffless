@@ -53,14 +53,16 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap"
           rel="stylesheet"
         />
-        {/* PWA meta tags */}
+        {/* PWA meta tags - Kodelab Edition */}
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-        <meta name="apple-mobile-web-app-title" content="Puffless" />
-        <meta name="application-name" content="Puffless" />
-        <meta name="msapplication-TileColor" content="#2EC4B6" />
+        <meta name="apple-mobile-web-app-title" content="Puffless Kodelab" />
+        <meta name="application-name" content="Puffless Kodelab" />
+        <meta name="msapplication-TileColor" content="#F59E0B" />
         <meta name="msapplication-tap-highlight" content="no" />
+        {/* Force cache bust */}
+        <meta name="version" content="2.0-kodelab-2026-04-01" />
         {/* Apple splash screens */}
         <link rel="apple-touch-icon" href="/icons/icon-192x192.png" />
         <link rel="apple-touch-icon" sizes="152x152" href="/icons/icon-152x152.png" />

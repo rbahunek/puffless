@@ -196,6 +196,52 @@ export function DashboardClient({
           </div>
         </motion.div>
 
+        {/* KODELAB IZAZOV - HERO CTA (TOP PRIORITY) */}
+        <motion.div variants={cardVariants}>
+          <Link href="/kodelab">
+            <Card className="border-0 bg-gradient-to-br from-amber-400 via-orange-500 to-pink-500 text-white hover:shadow-2xl transition-all cursor-pointer group relative overflow-hidden">
+              {/* Animated background decoration */}
+              <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-1000" />
+              
+              <CardContent className="p-6 md:p-8 relative">
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-sm flex items-center justify-center flex-shrink-0">
+                    <Star className="w-9 h-9 text-white" />
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-2">
+                      <h2 className="text-2xl md:text-3xl font-bold">Kodelab izazov 2026</h2>
+                      <span className="bg-white/20 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide">
+                        LIVE
+                      </span>
+                    </div>
+                    <p className="text-white/90 text-sm md:text-base">
+                      01.04. - 30.04. • Prijave zatvaraju se DANAS u 23:59! ⏰
+                    </p>
+                  </div>
+                  <ArrowRight className="w-8 h-8 text-white/80 group-hover:translate-x-2 group-hover:text-white transition-all flex-shrink-0" />
+                </div>
+                
+                <div className="grid grid-cols-2 gap-3 text-sm">
+                  <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3">
+                    <p className="text-white/70 text-xs mb-1">Dvije kategorije</p>
+                    <p className="font-bold">🏆 Izazivači + ⭐ Fantasy</p>
+                  </div>
+                  <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3">
+                    <p className="text-white/70 text-xs mb-1">Nagrada</p>
+                    <p className="font-bold">Slava i priznanje! 🎉</p>
+                  </div>
+                </div>
+
+                <div className="mt-4 flex items-center gap-2 text-xs text-white/80">
+                  <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse" />
+                  <span>Prijave aktivne • Chat uživo • Koeficijenti live</span>
+                </div>
+              </CardContent>
+            </Card>
+          </Link>
+        </motion.div>
+
         {/* Progress hero card */}
         {program && (
           <motion.div variants={cardVariants}>
@@ -425,33 +471,6 @@ export function DashboardClient({
             </Card>
           </motion.div>
         )}
-
-        {/* Kodelab Izazov CTA */}
-        <motion.div variants={cardVariants}>
-          <Link href="/kodelab">
-            <Card className="border-2 border-amber-300 bg-gradient-to-br from-amber-50 via-orange-50 to-pink-50 hover:shadow-xl transition-all cursor-pointer group">
-              <CardContent className="pt-5">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-4">
-                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-500 flex items-center justify-center">
-                      <Star className="w-7 h-7 text-white" />
-                    </div>
-                    <div>
-                      <h3 className="font-bold text-amber-900 text-lg mb-1">Kodelab izazov</h3>
-                      <p className="text-sm text-amber-700">
-                        01.04. - 30.04. • Prijave otvorene!
-                      </p>
-                      <p className="text-xs text-slate-600 mt-1">
-                        Izazivač ili Fantasy sudionik? Izaberi svoju ulogu! 🎮
-                      </p>
-                    </div>
-                  </div>
-                  <ArrowRight className="w-6 h-6 text-amber-600 group-hover:translate-x-1 transition-transform" />
-                </div>
-              </CardContent>
-            </Card>
-          </Link>
-        </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {/* Health milestones */}
