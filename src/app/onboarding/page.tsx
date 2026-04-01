@@ -85,7 +85,7 @@ export default function OnboardingPage() {
   const consumptionLabels = getConsumptionLabels(data.consumptionType)
   const onboardingQuestions = getOnboardingQuestions(data.consumptionType)
 
-  const steps = [
+  const allSteps = [
     { title: "Dobrodošao/la!", subtitle: "Što želiš pratiti?" },
     { title: "Recimo nam nešto o tebi", subtitle: "Tvoje osnovne informacije" },
     { title: "Tvoje navike", subtitle: "Ovo nam pomaže izračunati ušteđeni novac" },
@@ -94,13 +94,15 @@ export default function OnboardingPage() {
     { title: "Samostalno ili s prijateljem?", subtitle: "Zajedno je lakše!" },
   ]
 
+  // For FANTASY_ONLY users, skip step 2 (usage questions)
+  const steps = data.consumptionType === "FANTASY_ONLY" 
+    ? allSteps.filter((_, i) => i !== 2) // Remove step 2
+    : allSteps
+
   const totalSteps = steps.length
 
   const handleNext = () => {
-    // Skip usage questions (step 2) for FANTASY_ONLY users
-    if (step === 1 && data.consumptionType === "FANTASY_ONLY") {
-      setStep(3) // Jump to program selection
-    } else if (step < totalSteps - 1) {
+    if (step < totalSteps - 1) {
       setStep(step + 1)
     } else {
       handleSubmit()
@@ -108,10 +110,7 @@ export default function OnboardingPage() {
   }
 
   const handleBack = () => {
-    // Skip usage questions when going back for FANTASY_ONLY users
-    if (step === 3 && data.consumptionType === "FANTASY_ONLY") {
-      setStep(1) // Jump back to name step
-    } else if (step > 0) {
+    if (step > 0) {
       setStep(step - 1)
     }
   }
