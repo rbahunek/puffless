@@ -91,28 +91,28 @@ export function KodelabClient({
 
       {/* Hero Card */}
       <Card className="border-t-4 border-t-teal-500 bg-gradient-to-br from-teal-50 to-blue-50">
-        <CardContent className="pt-6">
-          <div className="flex items-start justify-between mb-4">
-            <div>
-              <h1 className="text-3xl font-bold text-slate-900 mb-2">{config.name}</h1>
-              <p className="text-slate-600">
-                Specijalni company event • 01.04. - 30.04.2026.
+        <CardContent className="pt-4 md:pt-6">
+          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3 mb-4">
+            <div className="flex-1 min-w-0">
+              <h1 className="text-2xl sm:text-3xl font-bold text-slate-900 mb-2 leading-tight">{config.name}</h1>
+              <p className="text-sm sm:text-base text-slate-600">
+                Company event • 01.04. - 30.04.2026.
               </p>
             </div>
-            <Badge className={stateColors[state]}>
+            <Badge className={`${stateColors[state]} flex-shrink-0 whitespace-nowrap`}>
               {getKodelabStateLabel(state)}
             </Badge>
           </div>
 
-          <div className="grid grid-cols-2 gap-4 mb-4">
-            <div className="flex items-center gap-2 text-sm">
-              <Calendar className="w-4 h-4 text-teal-600" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+            <div className="flex items-center gap-2 text-xs sm:text-sm">
+              <Calendar className="w-4 h-4 text-teal-600 flex-shrink-0" />
               <span className="text-slate-700">
                 Početak: {format(new Date(config.startDate), "d. MMM", { locale: hr })}
               </span>
             </div>
-            <div className="flex items-center gap-2 text-sm">
-              <Calendar className="w-4 h-4 text-teal-600" />
+            <div className="flex items-center gap-2 text-xs sm:text-sm">
+              <Calendar className="w-4 h-4 text-teal-600 flex-shrink-0" />
               <span className="text-slate-700">
                 Kraj: {format(new Date(config.endDate), "d. MMM", { locale: hr })}
               </span>
@@ -120,13 +120,13 @@ export function KodelabClient({
           </div>
 
           {!userRegistration && canRegister && (
-            <div className="space-y-2">
+            <div className="flex flex-col sm:flex-row gap-3">
               <Button 
                 onClick={() => setShowSurveyModal(true)}
-                className="w-full" 
+                className="flex-1" 
                 size="lg"
               >
-                Prijavi se kao Izazivač
+                🏆 Izazivač
               </Button>
               <Button 
                 onClick={async () => {
@@ -142,10 +142,10 @@ export function KodelabClient({
                   }
                 }}
                 variant="secondary" 
-                className="w-full" 
+                className="flex-1" 
                 size="lg"
               >
-                Pridruži se Fantasy igri
+                ⭐ Fantasy
               </Button>
             </div>
           )}
@@ -162,22 +162,24 @@ export function KodelabClient({
           )}
 
           {userRegistration && (
-            <div className="bg-teal-100 border border-teal-200 rounded-xl p-4">
-              <p className="text-sm text-teal-800 font-semibold">
-                Registriran/a kao: {userRegistration.role === "ACTIVE_PARTICIPANT" ? "Izazivač" : "Fantasy sudionik"}
-              </p>
-              {userRegistration.coefficient && (
-                <p className="text-xs text-teal-700 mt-1">
-                  Tvoj koeficijent: <strong>{userRegistration.coefficient.toFixed(2)}</strong>
+            <div className="bg-teal-100 border border-teal-200 rounded-xl p-3 sm:p-4">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+                <p className="text-xs sm:text-sm text-teal-800 font-semibold">
+                  {userRegistration.role === "ACTIVE_PARTICIPANT" ? "🏆 Izazivač" : "⭐ Fantasy sudionik"}
                 </p>
-              )}
+                {userRegistration.coefficient && (
+                  <p className="text-xs text-teal-700">
+                    Koeficijent: <strong className="text-base">{userRegistration.coefficient.toFixed(2)}</strong>
+                  </p>
+                )}
+              </div>
             </div>
           )}
         </CardContent>
       </Card>
 
       {/* Tabs */}
-      <div className="flex gap-2 overflow-x-auto pb-2">
+      <div className="flex gap-2 overflow-x-auto pb-2 -mx-4 px-4 sm:mx-0 sm:px-0 scrollbar-hide">
         {tabs.map((tab) => {
           const Icon = tab.icon
           const isActive = activeTab === tab.id
@@ -187,14 +189,14 @@ export function KodelabClient({
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={`
-                flex items-center gap-2 px-4 py-2 rounded-xl font-medium text-sm whitespace-nowrap transition-all
+                flex items-center gap-1.5 px-3 sm:px-4 py-2 rounded-xl font-medium text-xs sm:text-sm whitespace-nowrap transition-all flex-shrink-0
                 ${isActive
                   ? "bg-teal-500 text-white shadow-md"
                   : "bg-white text-slate-600 hover:bg-slate-50 border border-slate-200"
                 }
               `}
             >
-              <Icon className="w-4 h-4" />
+              <Icon className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
               {tab.label}
             </button>
           )
@@ -253,33 +255,33 @@ export function KodelabClient({
           ) : (
             participants.map((p) => (
               <Card key={p.id} className="hover:shadow-md transition-shadow">
-                <CardContent className="pt-5">
-                  <div className="flex items-start justify-between">
-                    <div className="flex-1">
-                      <h3 className="font-semibold text-slate-900">
+                <CardContent className="pt-4 pb-4">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-semibold text-slate-900 text-sm sm:text-base truncate">
                         {p.user.name || "Anonim"}
                       </h3>
                       {p.strategy && (
                         <p className="text-xs text-slate-500 mt-1">
-                          Strategija: {p.strategy}
+                          {p.strategy}
                         </p>
                       )}
                       {p.avgRating && (
-                        <div className="flex items-center gap-2 mt-2">
-                          <Star className="w-4 h-4 text-amber-500" />
-                          <span className="text-sm text-slate-700">
-                            Fantasy ocjena: <strong>{p.avgRating.toFixed(1)}</strong>
+                        <div className="flex items-center gap-1.5 mt-2">
+                          <Star className="w-3.5 h-3.5 text-amber-500 fill-amber-500" />
+                          <span className="text-xs sm:text-sm text-slate-700">
+                            <strong>{p.avgRating.toFixed(1)}</strong>
                           </span>
                         </div>
                       )}
                     </div>
-                    <div className="text-right">
+                    <div className="text-right flex-shrink-0">
                       {p.coefficient && (
-                        <div className="text-2xl font-bold text-teal-600">
+                        <div className="text-xl sm:text-2xl font-bold text-teal-600">
                           {p.coefficient.toFixed(2)}
                         </div>
                       )}
-                      <p className="text-xs text-slate-500">koeficijent</p>
+                      <p className="text-[10px] sm:text-xs text-slate-500">koef.</p>
                     </div>
                   </div>
                 </CardContent>
@@ -292,15 +294,15 @@ export function KodelabClient({
       {activeTab === "fantasy" && (
         <div className="space-y-4">
           <Card className="bg-gradient-to-br from-amber-50 to-orange-50 border-amber-200">
-            <CardContent className="pt-5">
-              <div className="flex items-center gap-3 mb-3">
-                <Star className="w-6 h-6 text-amber-600" />
-                <div>
-                  <h3 className="font-semibold text-amber-900">Puffless Fantasy</h3>
+            <CardContent className="pt-4 sm:pt-5">
+              <div className="flex items-start gap-3 mb-3">
+                <Star className="w-5 h-5 sm:w-6 sm:h-6 text-amber-600 flex-shrink-0" />
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-semibold text-amber-900 text-sm sm:text-base">Puffless Fantasy</h3>
                   <p className="text-xs text-amber-700">Predviđaj tko će uspjeti!</p>
                 </div>
               </div>
-              <p className="text-sm text-slate-700 leading-relaxed">
+              <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
                 Dobivaš <strong>100 Puff bodova</strong> za raspodjelu. Rasporedi ih na sudionike u koje vjeruješ.
                 Na kraju izazova, tvoj rezultat ovisi o uspjehu tvojih prognoza i koeficijentima.
               </p>
@@ -310,19 +312,21 @@ export function KodelabClient({
           {userRegistration?.role === "FANTASY_PARTICIPANT" ? (
             <div className="space-y-4">
               {!showFantasyView && (
-                <div className="flex gap-3">
+                <div className="flex flex-col sm:flex-row gap-3">
                   <Button 
                     onClick={() => setShowFantasyView("rating")}
                     className="flex-1"
+                    size="lg"
                   >
-                    Ocijeni sudionike
+                    ⭐ Ocijeni
                   </Button>
                   <Button 
                     onClick={() => setShowFantasyView("portfolio")}
                     variant="secondary"
                     className="flex-1"
+                    size="lg"
                   >
-                    Raspodjela bodova
+                    💰 Bodovi
                   </Button>
                 </div>
               )}
