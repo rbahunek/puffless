@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server"
 import { auth } from "@/lib/auth"
 import { prisma } from "@/lib/prisma"
+import { KODELAB_CONFIG } from "@/lib/kodelab"
 
 export async function POST(request: NextRequest) {
   try {
@@ -79,6 +80,24 @@ export async function POST(request: NextRequest) {
         cigarettesSmoked: 1,
       },
     })
+
+    // Update Kodelab totalConsumption if log is during challenge period
+    const now = new Date()
+    if (now >= KODELAB_CONFIG.startDate && now <= KODELAB_CONFIG.endDate) {
+      const kodelabReg = await prisma.kodelabRegistration.findUnique({
+        where: { userId },
+      })
+
+      if (kodelabReg && kodelabReg.role === "ACTIVE_PARTICIPANT") {
+        await prisma.kodelabRegistration.update({
+          where: { userId },
+          data: {
+            totalConsumption: { increment: 1 },
+            graceUsed: isGrace ? { increment: 1 } : undefined,
+          },
+        })
+      }
+    }
 
     return NextResponse.json({ message, isGrace }, { status: 201 })
   } catch (error) {
